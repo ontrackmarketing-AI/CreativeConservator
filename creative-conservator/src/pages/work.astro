@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import PortfolioCard from '../components/PortfolioCard.astro';
+import { portfolioProjects, portfolioCategories } from '../data/portfolio';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Work' },
+    ],
+  },
+  ...portfolioProjects.map((project) => ({
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.description,
+    creator: {
+      '@type': 'Organization',
+      name: 'The Creative Conservator',
+    },
+  })),
+];
+---
+
+<BaseLayout
+  title="Our Work | The Creative Conservator"
+  description="Explore our portfolio of intentional creative work - brand campaigns, editorial direction, content creation, and visual storytelling by The Creative Conservator."
+  structuredData={structuredData}
+  currentPath="/work"
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow="Portfolio"
+    title="Our Work"
+    lead="A curated selection of projects that demonstrate our approach to intentional creative work."
+    image="/images/hero/hero-fashion-duo-1920.jpg"
+    imageAlt="Fashion editorial showcasing creative direction"
+    variant="full-bleed"
+    align="center"
+  />
+
+  <!-- Filter Bar + Portfolio Grid -->
+  <section class="section">
+    <div class="container">
+      <!-- Filter Bar -->
+      <div class="filter-container" data-reveal="fade-up">
+        <div class="filter-bar" data-portfolio-filter>
+          {portfolioCategories.map((category, index) => (
+            <button
+              class:list={['filter-btn', { 'is-active': index === 0 }]}
+              data-filter={category === 'All' ? 'all' : category}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Portfolio Grid -->
+      <div class="masonry-grid mt-3xl" data-portfolio-grid>
+        {portfolioProjects.map((project) => (
+          <PortfolioCard project={project} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section section-cream">
+    <div class="container-narrow text-center" data-reveal="fade-up">
+      <h2>Let's Create Your Next Project</h2>
+      <div class="divider divider-center"></div>
+      <p class="lead">
+        Ready to bring your brand vision to life with intentional, artful creative work? We'd love to collaborate.
+      </p>
+      <a href="/contact" class="btn btn-primary mt-xl" data-transition-link>
+        Get in Touch
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-container {
+    display: flex;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import DefinitionBlock from '../components/DefinitionBlock.astro';
+import { values, purpose, mission, founderBio } from '../data/faqs';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'About' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About The Creative Conservator',
+    description: 'A modern creative marketing studio devoted to preserving the artistry at the heart of every brand.',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Darya',
+      description: founderBio.bio,
+      jobTitle: 'Founder',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="About Us | The Creative Conservator"
+  description="Learn about The Creative Conservator - a modern creative marketing studio founded by Darya, devoted to preserving the artistry at the heart of every brand."
+  structuredData={structuredData}
+  currentPath="/about"
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow="About Us"
+    title="The Art of Preserving Creative Expression"
+    lead="Preserving the artistry at the heart of every brand."
+    image="/images/hero/hero-elegant-interior-1920.jpg"
+    imageAlt="Elegant interior representing refined brand aesthetics"
+    variant="full-bleed"
+    align="left"
+  />
+
+  <!-- Definition Block Section -->
+  <section class="section">
+    <div class="container-narrow">
+      <DefinitionBlock />
+
+      <div class="about-content mt-3xl" data-reveal="fade-up">
+        <p class="body-lg">
+          The Creative Conservator is a modern creative marketing studio devoted to preserving the artistry at the heart of every brand. We blend intentional strategy with refined content creation—photography, videography, social media, and storytelling—to shape identities that feel timeless, compelling, and unmistakably distinct.
+        </p>
+        <p class="body-lg mt-lg">
+          Our work protects the essence of a brand while elevating how it's seen, heard, and remembered across every digital touchpoint. We don't just create content; we conserve creative expression and translate it into intelligent strategy that amplifies and sustains brand presence.
+        </p>
+      </div>
+
+      <!-- Decorative circle -->
+      <div class="decorative-circle" style="right: -15%; top: 10%;" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Purpose & Mission -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="purpose-mission-grid" data-reveal="stagger-up">
+        <div class="purpose-card">
+          <h2>Purpose</h2>
+          <div class="divider"></div>
+          <p>{purpose}</p>
+        </div>
+        <div class="purpose-card mission">
+          <h2>Mission</h2>
+          <div class="divider" style="background-color: var(--green);"></div>
+          <p>{mission}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">What Guides Us</p>
+        <h2>Our Values</h2>
+        <div class="divider divider-center"></div>
+      </header>
+
+      <div class="values-grid" data-reveal="stagger-up">
+        {values.map((value) => (
+          <div class="value-card">
+            <h3>{value.title}</h3>
+            <p>{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Section -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="founder-grid">
+        <div class="founder-image" data-reveal="scale-in">
+          <div class="decorative-rect" aria-hidden="true"></div>
+          <img
+            src="/images/founder/founder-darya-creative-800.jpg"
+            alt="Darya, Founder of The Creative Conservator"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="founder-content" data-reveal="fade-left">
+          <p class="eyebrow">The Founder</p>
+          <h2>{founderBio.name}</h2>
+          <div class="divider"></div>
+          <p class="body-lg">{founderBio.bio}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container-narrow text-center" data-reveal="fade-up">
+      <h2>Ready to Begin?</h2>
+      <div class="divider divider-center"></div>
+      <p class="lead">
+        Let's discuss how we can preserve and elevate your brand.
+      </p>
+      <a href="/contact" class="btn btn-primary mt-xl" data-transition-link>
+        Get in Touch
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-content {
+    position: relative;
+  }
+
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .founder-image {
+    position: relative;
+  }
+
+  .founder-image .decorative-rect {
+    position: absolute;
+    top: var(--space-xl);
+    left: calc(-1 * var(--space-xl));
+    width: 80%;
+    height: 90%;
+    z-index: 0;
+  }
+
+  .founder-image img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .founder-content {
+    padding-left: var(--space-xl);
+  }
+
+  @media (max-width: 768px) {
+    .founder-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .founder-image {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .founder-content {
+      padding-left: 0;
+      text-align: center;
+    }
+
+    .founder-content .divider {
+      margin-inline: auto;
+    }
+  }
+</style>

@@ -1,0 +1,536 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import { packages, upgradePaths, formatPrice, getUpgradePathFrom } from '../../data/pricing';
+import { services, getServiceBySlug } from '../../data/services';
+
+export function getStaticPaths() {
+  return packages.map((pkg) => ({
+    params: { slug: pkg.slug },
+    props: { package: pkg },
+  }));
+}
+
+const { package: pkg } = Astro.props;
+const priceDisplay = formatPrice(pkg.price.min, pkg.price.max);
+const upgradePath = getUpgradePathFrom(pkg.id);
+const nextPackage = upgradePath ? packages.find(p => p.id === upgradePath.to) : null;
+
+// Get related services
+const relatedServices = pkg.relatedServices
+  .map(slug => getServiceBySlug(slug))
+  .filter(Boolean);
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Packages', item: 'https://www.creativeconservator.com/packages/' },
+      { '@type': 'ListItem', position: 3, name: pkg.name },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `${pkg.name} Package`,
+    description: pkg.fullDescription,
+    brand: {
+      '@type': 'Brand',
+      name: 'The Creative Conservator',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: pkg.price.min,
+      priceCurrency: 'USD',
+      priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+    },
+  },
+];
+---
+
+<BaseLayout
+  title={`${pkg.name} Package | The Creative Conservator`}
+  description={pkg.fullDescription.substring(0, 160)}
+  structuredData={structuredData}
+  currentPath={`/packages/${pkg.slug}`}
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow={pkg.type === 'one-time' ? 'One-Time Project' : 'Monthly Retainer'}
+    title={pkg.name}
+    lead={pkg.tagline}
+    variant="cream"
+    align="center"
+    breadcrumb={{
+      items: [
+        { label: 'Home', href: '/' },
+        { label: 'Packages', href: '/packages' },
+        { label: pkg.name },
+      ],
+    }}
+  />
+
+  <!-- Package Overview -->
+  <section class="section">
+    <div class="container">
+      <div class="package-detail-grid">
+        <div class="package-description" data-reveal="fade-up">
+          <h2>What Is {pkg.name}?</h2>
+          <div class="divider"></div>
+          <p class="body-lg">{pkg.fullDescription}</p>
+
+          <div class="package-price-hero">
+            <span class="package-price-value">{priceDisplay}</span>
+            <span class="package-price-suffix">{pkg.price.suffix}</span>
+            {pkg.price.note && <span class="package-price-note">{pkg.price.note}</span>}
+          </div>
+
+          <a href={pkg.ctaHref} class="btn btn-primary" data-transition-link>
+            {pkg.ctaText}
+          </a>
+        </div>
+        <div class="package-image" data-reveal="fade-left">
+          <img
+            src="/images/services/services-collaboration-800.jpg"
+            alt={`${pkg.name} package illustration`}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's Included -->
+  <section class="section section-cream">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">What's Included</p>
+        <h2>Services in This Package</h2>
+        <div class="divider divider-center"></div>
+      </header>
+
+      <div class="package-services-grid" data-reveal="stagger-up">
+        {pkg.services.map((service) => (
+          <div class="package-service-card">
+            <div class="package-service-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h4>{service.name}</h4>
+              {service.description && (
+                <p>{service.description}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables -->
+  <section class="section">
+    <div class="container">
+      <div class="deliverables-grid">
+        <div class="deliverables-content" data-reveal="fade-right">
+          <p class="eyebrow">Deliverables</p>
+          <h2>What You'll Receive</h2>
+          <div class="divider"></div>
+
+          <ul class="deliverables-list">
+            {pkg.deliverables.map((deliverable) => (
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>{deliverable}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="deliverables-meta">
+            {pkg.timeline && (
+              <div class="deliverables-meta-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span><strong>Timeline:</strong> {pkg.timeline}</span>
+              </div>
+            )}
+            {pkg.commitment && (
+              <div class="deliverables-meta-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span><strong>Commitment:</strong> {pkg.commitment}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div class="deliverables-image" data-reveal="fade-left">
+          <img
+            src="/images/services/services-collaboration-400.jpg"
+            alt="Package deliverables"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outcome -->
+  <section class="section section-cream">
+    <div class="container-narrow">
+      <div class="outcome-block" data-reveal="fade-up">
+        <p class="eyebrow text-center">The Outcome</p>
+        <blockquote class="outcome-quote">
+          {pkg.outcome}
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upgrade Path (if applicable) -->
+  {nextPackage && (
+    <section class="section">
+      <div class="container-narrow">
+        <header class="section-header text-center" data-reveal="fade-up">
+          <p class="eyebrow">Ready for More?</p>
+          <h2>Your Next Step</h2>
+          <div class="divider divider-center"></div>
+        </header>
+
+        <div class="upgrade-card" data-reveal="fade-up">
+          <div class="upgrade-card-content">
+            <span class="upgrade-card-label">{nextPackage.tagline}</span>
+            <h3>{nextPackage.name}</h3>
+            <p>{upgradePath?.message}</p>
+            <p class="upgrade-card-price">
+              {formatPrice(nextPackage.price.min, nextPackage.price.max)}
+              <span>{nextPackage.price.suffix}</span>
+            </p>
+          </div>
+          <a href={`/packages/${nextPackage.slug}`} class="btn btn-secondary" data-transition-link>
+            Learn About {nextPackage.name}
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Related Services -->
+  {relatedServices.length > 0 && (
+    <section class="section section-cream">
+      <div class="container">
+        <header class="section-header text-center" data-reveal="fade-up">
+          <p class="eyebrow">Related Services</p>
+          <h2>Services in This Package</h2>
+          <div class="divider divider-center"></div>
+          <p class="intro mx-auto" style="max-width: 550px;">
+            Explore the individual services that make up this package.
+          </p>
+        </header>
+
+        <div class="related-services" data-reveal="stagger-up">
+          {relatedServices.map((service) => (
+            <ServiceCard service={service} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <section class="section section-red">
+    <div class="container text-center">
+      <div data-reveal="fade-up">
+        <p class="eyebrow text-cream">Ready to Start?</p>
+        <h2 class="text-white mt-md">Get Started with {pkg.name}</h2>
+        <p class="lead text-cream mt-lg mx-auto" style="max-width: 600px; opacity: 0.9;">
+          Book a complimentary discovery call to discuss your needs and see if {pkg.name} is the right fit for your brand.
+        </p>
+        <a href={pkg.ctaHref} class="btn btn-light mt-xl" data-transition-link>
+          {pkg.ctaText}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Package Detail Grid */
+  .package-detail-grid {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .package-image img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    clip-path: polygon(0 0, 100% 2%, 98% 98%, 0% 100%);
+  }
+
+  @media (max-width: 768px) {
+    .package-detail-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .package-image {
+      order: -1;
+    }
+  }
+
+  /* Package Price Hero */
+  .package-price-hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-sm);
+    margin: var(--space-xl) 0;
+    padding: var(--space-lg);
+    background-color: var(--cream);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--green);
+  }
+
+  .package-price-value {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--deep-red);
+  }
+
+  .package-price-suffix {
+    font-size: var(--text-body-lg);
+    color: var(--vintage-wine);
+    opacity: 0.8;
+  }
+
+  .package-price-note {
+    flex-basis: 100%;
+    font-size: var(--text-small);
+    font-style: italic;
+    color: var(--vintage-wine);
+    opacity: 0.7;
+  }
+
+  /* Package Services Grid */
+  .package-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .package-service-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--cream-dark);
+    transition: border-color var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .package-service-card:hover {
+    border-color: var(--green);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .package-service-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--green);
+  }
+
+  .package-service-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .package-service-card h4 {
+    font-family: var(--font-heading);
+    font-size: var(--text-body);
+    font-weight: 600;
+    color: var(--deep-red);
+    margin-bottom: var(--space-xs);
+  }
+
+  .package-service-card p {
+    font-size: var(--text-small);
+    color: var(--vintage-wine);
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  /* Deliverables Grid */
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .deliverables-image img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (max-width: 768px) {
+    .deliverables-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .deliverables-image {
+      order: -1;
+    }
+  }
+
+  /* Deliverables List */
+  .deliverables-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .deliverables-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: var(--text-body);
+    color: var(--vintage-wine);
+  }
+
+  .deliverables-list svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--green);
+  }
+
+  /* Deliverables Meta */
+  .deliverables-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    background-color: var(--cream);
+    border-radius: var(--radius-md);
+  }
+
+  .deliverables-meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-small);
+    color: var(--vintage-wine);
+  }
+
+  .deliverables-meta-item svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--green);
+  }
+
+  .deliverables-meta-item strong {
+    color: var(--deep-red);
+  }
+
+  /* Outcome Block */
+  .outcome-block {
+    text-align: center;
+  }
+
+  .outcome-quote {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--deep-red);
+    border-left: 4px solid var(--green);
+    padding-left: var(--space-xl);
+    margin-top: var(--space-xl);
+    text-align: left;
+  }
+
+  /* Upgrade Card */
+  .upgrade-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-2xl);
+    background-color: var(--cream);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--cream-dark);
+  }
+
+  .upgrade-card-label {
+    display: block;
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: var(--space-xs);
+  }
+
+  .upgrade-card h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    color: var(--deep-red);
+    margin-bottom: var(--space-sm);
+  }
+
+  .upgrade-card p {
+    color: var(--vintage-wine);
+    line-height: 1.6;
+  }
+
+  .upgrade-card-price {
+    margin-top: var(--space-md);
+    font-family: var(--font-heading);
+    font-size: var(--text-h4);
+    font-weight: 600;
+    color: var(--deep-red);
+  }
+
+  .upgrade-card-price span {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    font-weight: 400;
+    color: var(--vintage-wine);
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .upgrade-card {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

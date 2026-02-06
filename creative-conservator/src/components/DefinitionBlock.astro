@@ -1,0 +1,23 @@
+---
+import { brandDefinition } from '../data/faqs';
+
+export interface Props {
+  term?: string;
+  pronunciation?: string;
+  partOfSpeech?: string;
+  meaning?: string;
+}
+
+const {
+  term = brandDefinition.term,
+  pronunciation = brandDefinition.pronunciation,
+  partOfSpeech = brandDefinition.partOfSpeech,
+  meaning = brandDefinition.meaning,
+} = Astro.props;
+---
+
+<div class="definition-block" data-reveal="clip-up">
+  <p class="term">{term}</p>
+  <p class="pronunciation">{pronunciation} {partOfSpeech}</p>
+  <p class="meaning">— {meaning}</p>
+</div>

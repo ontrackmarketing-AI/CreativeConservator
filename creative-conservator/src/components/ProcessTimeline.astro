@@ -1,0 +1,39 @@
+---
+import { processSteps } from '../data/services';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = 'The Process',
+  subtitle = 'A proven framework for bringing your brand vision to life.',
+} = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <header class="section-header text-center" data-reveal="fade-up">
+      <p class="eyebrow">Our Process</p>
+      <h2>{title}</h2>
+      <div class="divider divider-center"></div>
+      <p class="intro mx-auto">{subtitle}</p>
+    </header>
+
+    <div class="process-timeline" data-reveal="stagger-up">
+      <div class="process-timeline-line">
+        <div class="process-timeline-line-fill" data-process-line></div>
+      </div>
+
+      {processSteps.map((step) => (
+        <div class="process-step">
+          <span class="process-step-number">{step.number}</span>
+          <div class="process-step-dot"></div>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

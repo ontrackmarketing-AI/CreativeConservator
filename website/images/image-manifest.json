@@ -1,0 +1,626 @@
+{
+  "hero-creative-studio": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206681.jpg",
+    "category": "hero",
+    "versions": [
+      {
+        "width": 2560,
+        "height": 3840,
+        "webp": "images/hero/hero-creative-studio-2560.webp",
+        "jpeg": "images/hero/hero-creative-studio-2560.jpg",
+        "webp_size_kb": 315.4,
+        "jpeg_size_kb": 715.7
+      },
+      {
+        "width": 1920,
+        "height": 2880,
+        "webp": "images/hero/hero-creative-studio-1920.webp",
+        "jpeg": "images/hero/hero-creative-studio-1920.jpg",
+        "webp_size_kb": 166.0,
+        "jpeg_size_kb": 375.0
+      },
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/hero/hero-creative-studio-1200.webp",
+        "jpeg": "images/hero/hero-creative-studio-1200.jpg",
+        "webp_size_kb": 71.2,
+        "jpeg_size_kb": 149.0
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/hero/hero-creative-studio-800.webp",
+        "jpeg": "images/hero/hero-creative-studio-800.jpg",
+        "webp_size_kb": 37.2,
+        "jpeg_size_kb": 73.8
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/hero/hero-creative-studio-400.webp",
+        "jpeg": "images/hero/hero-creative-studio-400.jpg",
+        "webp_size_kb": 12.6,
+        "jpeg_size_kb": 23.5
+      }
+    ]
+  },
+  "hero-perfume-detail": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206671 copy.jpg",
+    "category": "hero",
+    "versions": [
+      {
+        "width": 2560,
+        "height": 3840,
+        "webp": "images/hero/hero-perfume-detail-2560.webp",
+        "jpeg": "images/hero/hero-perfume-detail-2560.jpg",
+        "webp_size_kb": 277.9,
+        "jpeg_size_kb": 693.0
+      },
+      {
+        "width": 1920,
+        "height": 2880,
+        "webp": "images/hero/hero-perfume-detail-1920.webp",
+        "jpeg": "images/hero/hero-perfume-detail-1920.jpg",
+        "webp_size_kb": 138.4,
+        "jpeg_size_kb": 333.7
+      },
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/hero/hero-perfume-detail-1200.webp",
+        "jpeg": "images/hero/hero-perfume-detail-1200.jpg",
+        "webp_size_kb": 55.4,
+        "jpeg_size_kb": 121.1
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/hero/hero-perfume-detail-800.webp",
+        "jpeg": "images/hero/hero-perfume-detail-800.jpg",
+        "webp_size_kb": 28.7,
+        "jpeg_size_kb": 59.3
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/hero/hero-perfume-detail-400.webp",
+        "jpeg": "images/hero/hero-perfume-detail-400.jpg",
+        "webp_size_kb": 10.2,
+        "jpeg_size_kb": 20.2
+      }
+    ]
+  },
+  "hero-fashion-duo": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 2\\B2206695.jpg",
+    "category": "hero",
+    "versions": [
+      {
+        "width": 2560,
+        "height": 3840,
+        "webp": "images/hero/hero-fashion-duo-2560.webp",
+        "jpeg": "images/hero/hero-fashion-duo-2560.jpg",
+        "webp_size_kb": 735.3,
+        "jpeg_size_kb": 1223.7
+      },
+      {
+        "width": 1920,
+        "height": 2880,
+        "webp": "images/hero/hero-fashion-duo-1920.webp",
+        "jpeg": "images/hero/hero-fashion-duo-1920.jpg",
+        "webp_size_kb": 387.1,
+        "jpeg_size_kb": 667.6
+      },
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/hero/hero-fashion-duo-1200.webp",
+        "jpeg": "images/hero/hero-fashion-duo-1200.jpg",
+        "webp_size_kb": 152.1,
+        "jpeg_size_kb": 267.4
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/hero/hero-fashion-duo-800.webp",
+        "jpeg": "images/hero/hero-fashion-duo-800.jpg",
+        "webp_size_kb": 76.0,
+        "jpeg_size_kb": 131.0
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/hero/hero-fashion-duo-400.webp",
+        "jpeg": "images/hero/hero-fashion-duo-400.jpg",
+        "webp_size_kb": 27.0,
+        "jpeg_size_kb": 42.0
+      }
+    ]
+  },
+  "hero-elegant-interior": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 2\\B2206772.jpg",
+    "category": "hero",
+    "versions": [
+      {
+        "width": 2560,
+        "height": 3840,
+        "webp": "images/hero/hero-elegant-interior-2560.webp",
+        "jpeg": "images/hero/hero-elegant-interior-2560.jpg",
+        "webp_size_kb": 477.2,
+        "jpeg_size_kb": 931.1
+      },
+      {
+        "width": 1920,
+        "height": 2880,
+        "webp": "images/hero/hero-elegant-interior-1920.webp",
+        "jpeg": "images/hero/hero-elegant-interior-1920.jpg",
+        "webp_size_kb": 285.6,
+        "jpeg_size_kb": 534.8
+      },
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/hero/hero-elegant-interior-1200.webp",
+        "jpeg": "images/hero/hero-elegant-interior-1200.jpg",
+        "webp_size_kb": 135.5,
+        "jpeg_size_kb": 232.5
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/hero/hero-elegant-interior-800.webp",
+        "jpeg": "images/hero/hero-elegant-interior-800.jpg",
+        "webp_size_kb": 71.4,
+        "jpeg_size_kb": 116.6
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/hero/hero-elegant-interior-400.webp",
+        "jpeg": "images/hero/hero-elegant-interior-400.jpg",
+        "webp_size_kb": 24.6,
+        "jpeg_size_kb": 36.4
+      }
+    ]
+  },
+  "founder-darya-creative": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206573.jpg",
+    "category": "founder",
+    "versions": [
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/founder/founder-darya-creative-800.webp",
+        "jpeg": "images/founder/founder-darya-creative-800.jpg",
+        "webp_size_kb": 93.6,
+        "jpeg_size_kb": 153.2
+      },
+      {
+        "width": 560,
+        "height": 840,
+        "webp": "images/founder/founder-darya-creative-560.webp",
+        "jpeg": "images/founder/founder-darya-creative-560.jpg",
+        "webp_size_kb": 57.5,
+        "jpeg_size_kb": 88.5
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/founder/founder-darya-creative-400.webp",
+        "jpeg": "images/founder/founder-darya-creative-400.jpg",
+        "webp_size_kb": 35.7,
+        "jpeg_size_kb": 52.7
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/founder/founder-darya-creative-200.webp",
+        "jpeg": "images/founder/founder-darya-creative-200.jpg",
+        "webp_size_kb": 12.9,
+        "jpeg_size_kb": 17.8
+      }
+    ]
+  },
+  "founder-darya-collaboration": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 2\\B2206573.jpg",
+    "category": "founder",
+    "versions": [
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/founder/founder-darya-collaboration-800.webp",
+        "jpeg": "images/founder/founder-darya-collaboration-800.jpg",
+        "webp_size_kb": 99.6,
+        "jpeg_size_kb": 160.7
+      },
+      {
+        "width": 560,
+        "height": 840,
+        "webp": "images/founder/founder-darya-collaboration-560.webp",
+        "jpeg": "images/founder/founder-darya-collaboration-560.jpg",
+        "webp_size_kb": 61.6,
+        "jpeg_size_kb": 92.9
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/founder/founder-darya-collaboration-400.webp",
+        "jpeg": "images/founder/founder-darya-collaboration-400.jpg",
+        "webp_size_kb": 37.8,
+        "jpeg_size_kb": 55.2
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/founder/founder-darya-collaboration-200.webp",
+        "jpeg": "images/founder/founder-darya-collaboration-200.jpg",
+        "webp_size_kb": 13.7,
+        "jpeg_size_kb": 18.7
+      }
+    ]
+  },
+  "portfolio-kilian-perfume-hands": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206671 copy.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-kilian-perfume-hands-1200.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-hands-1200.jpg",
+        "webp_size_kb": 55.4,
+        "jpeg_size_kb": 121.1
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-kilian-perfume-hands-800.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-hands-800.jpg",
+        "webp_size_kb": 28.7,
+        "jpeg_size_kb": 59.3
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-kilian-perfume-hands-400.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-hands-400.jpg",
+        "webp_size_kb": 10.2,
+        "jpeg_size_kb": 20.2
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-kilian-perfume-hands-200.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-hands-200.jpg",
+        "webp_size_kb": 3.8,
+        "jpeg_size_kb": 7.4
+      }
+    ]
+  },
+  "portfolio-kilian-perfume-lips": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206681.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-kilian-perfume-lips-1200.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-lips-1200.jpg",
+        "webp_size_kb": 71.2,
+        "jpeg_size_kb": 149.0
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-kilian-perfume-lips-800.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-lips-800.jpg",
+        "webp_size_kb": 37.2,
+        "jpeg_size_kb": 73.8
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-kilian-perfume-lips-400.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-lips-400.jpg",
+        "webp_size_kb": 12.6,
+        "jpeg_size_kb": 23.5
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-kilian-perfume-lips-200.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-perfume-lips-200.jpg",
+        "webp_size_kb": 4.4,
+        "jpeg_size_kb": 8.2
+      }
+    ]
+  },
+  "portfolio-kilian-editorial": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206681 g.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-kilian-editorial-1200.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-editorial-1200.jpg",
+        "webp_size_kb": 125.8,
+        "jpeg_size_kb": 253.4
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-kilian-editorial-800.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-editorial-800.jpg",
+        "webp_size_kb": 46.8,
+        "jpeg_size_kb": 99.3
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-kilian-editorial-400.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-editorial-400.jpg",
+        "webp_size_kb": 13.1,
+        "jpeg_size_kb": 24.9
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-kilian-editorial-200.webp",
+        "jpeg": "images/portfolio/portfolio-kilian-editorial-200.jpg",
+        "webp_size_kb": 4.4,
+        "jpeg_size_kb": 8.2
+      }
+    ]
+  },
+  "portfolio-fashion-editorial-duo": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206473.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-fashion-editorial-duo-1200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-editorial-duo-1200.jpg",
+        "webp_size_kb": 101.2,
+        "jpeg_size_kb": 180.3
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-fashion-editorial-duo-800.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-editorial-duo-800.jpg",
+        "webp_size_kb": 57.9,
+        "jpeg_size_kb": 95.4
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-fashion-editorial-duo-400.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-editorial-duo-400.jpg",
+        "webp_size_kb": 20.3,
+        "jpeg_size_kb": 31.6
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-fashion-editorial-duo-200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-editorial-duo-200.jpg",
+        "webp_size_kb": 6.7,
+        "jpeg_size_kb": 10.3
+      }
+    ]
+  },
+  "portfolio-fashion-back-to-back": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 2\\B2206695.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-fashion-back-to-back-1200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-back-to-back-1200.jpg",
+        "webp_size_kb": 152.1,
+        "jpeg_size_kb": 267.4
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-fashion-back-to-back-800.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-back-to-back-800.jpg",
+        "webp_size_kb": 76.0,
+        "jpeg_size_kb": 131.0
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-fashion-back-to-back-400.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-back-to-back-400.jpg",
+        "webp_size_kb": 27.0,
+        "jpeg_size_kb": 42.0
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-fashion-back-to-back-200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-back-to-back-200.jpg",
+        "webp_size_kb": 9.6,
+        "jpeg_size_kb": 13.4
+      }
+    ]
+  },
+  "portfolio-fashion-elegant-room": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 2\\B2206772.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-fashion-elegant-room-1200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-elegant-room-1200.jpg",
+        "webp_size_kb": 135.5,
+        "jpeg_size_kb": 232.5
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-fashion-elegant-room-800.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-elegant-room-800.jpg",
+        "webp_size_kb": 71.4,
+        "jpeg_size_kb": 116.6
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-fashion-elegant-room-400.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-elegant-room-400.jpg",
+        "webp_size_kb": 24.6,
+        "jpeg_size_kb": 36.4
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-fashion-elegant-room-200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-elegant-room-200.jpg",
+        "webp_size_kb": 7.9,
+        "jpeg_size_kb": 11.4
+      }
+    ]
+  },
+  "portfolio-luxury-lounge": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206625.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-luxury-lounge-1200.webp",
+        "jpeg": "images/portfolio/portfolio-luxury-lounge-1200.jpg",
+        "webp_size_kb": 101.4,
+        "jpeg_size_kb": 193.9
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-luxury-lounge-800.webp",
+        "jpeg": "images/portfolio/portfolio-luxury-lounge-800.jpg",
+        "webp_size_kb": 58.7,
+        "jpeg_size_kb": 104.4
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-luxury-lounge-400.webp",
+        "jpeg": "images/portfolio/portfolio-luxury-lounge-400.jpg",
+        "webp_size_kb": 24.3,
+        "jpeg_size_kb": 38.0
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-luxury-lounge-200.webp",
+        "jpeg": "images/portfolio/portfolio-luxury-lounge-200.jpg",
+        "webp_size_kb": 9.7,
+        "jpeg_size_kb": 13.6
+      }
+    ]
+  },
+  "portfolio-fashion-interior": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206534.jpg",
+    "category": "portfolio",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/portfolio/portfolio-fashion-interior-1200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-interior-1200.jpg",
+        "webp_size_kb": 165.2,
+        "jpeg_size_kb": 276.6
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/portfolio/portfolio-fashion-interior-800.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-interior-800.jpg",
+        "webp_size_kb": 88.6,
+        "jpeg_size_kb": 141.2
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/portfolio/portfolio-fashion-interior-400.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-interior-400.jpg",
+        "webp_size_kb": 29.7,
+        "jpeg_size_kb": 45.8
+      },
+      {
+        "width": 200,
+        "height": 300,
+        "webp": "images/portfolio/portfolio-fashion-interior-200.webp",
+        "jpeg": "images/portfolio/portfolio-fashion-interior-200.jpg",
+        "webp_size_kb": 10.2,
+        "jpeg_size_kb": 14.9
+      }
+    ]
+  },
+  "services-creative-process": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 1\\B2206574.jpg",
+    "category": "services",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/services/services-creative-process-1200.webp",
+        "jpeg": "images/services/services-creative-process-1200.jpg",
+        "webp_size_kb": 168.2,
+        "jpeg_size_kb": 290.7
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/services/services-creative-process-800.webp",
+        "jpeg": "images/services/services-creative-process-800.jpg",
+        "webp_size_kb": 95.7,
+        "jpeg_size_kb": 154.7
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/services/services-creative-process-400.webp",
+        "jpeg": "images/services/services-creative-process-400.jpg",
+        "webp_size_kb": 36.0,
+        "jpeg_size_kb": 52.5
+      }
+    ]
+  },
+  "services-collaboration": {
+    "source": "C:\\Users\\Owner\\Downloads\\Version 2\\B2206573.jpg",
+    "category": "services",
+    "versions": [
+      {
+        "width": 1200,
+        "height": 1800,
+        "webp": "images/services/services-collaboration-1200.webp",
+        "jpeg": "images/services/services-collaboration-1200.jpg",
+        "webp_size_kb": 183.2,
+        "jpeg_size_kb": 306.2
+      },
+      {
+        "width": 800,
+        "height": 1200,
+        "webp": "images/services/services-collaboration-800.webp",
+        "jpeg": "images/services/services-collaboration-800.jpg",
+        "webp_size_kb": 99.6,
+        "jpeg_size_kb": 160.7
+      },
+      {
+        "width": 400,
+        "height": 600,
+        "webp": "images/services/services-collaboration-400.webp",
+        "jpeg": "images/services/services-collaboration-400.jpg",
+        "webp_size_kb": 37.8,
+        "jpeg_size_kb": 55.2
+      }
+    ]
+  }
+}

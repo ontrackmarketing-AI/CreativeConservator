@@ -1,0 +1,42 @@
+---
+import { testimonials } from '../data/testimonials';
+
+export interface Props {
+  autoplayInterval?: number;
+}
+
+const { autoplayInterval = 8000 } = Astro.props;
+---
+
+<section class="section section-cream grain">
+  <div class="container">
+    <div class="testimonial-carousel" data-testimonial-carousel data-autoplay={autoplayInterval.toString()}>
+      <span class="quote-mark" aria-hidden="true">"</span>
+
+      {testimonials.map((testimonial, index) => (
+        <div
+          class:list={['testimonial-slide', { 'is-active': index === 0 }]}
+          data-testimonial-slide
+        >
+          <blockquote class="testimonial-quote">
+            "{testimonial.quote}"
+          </blockquote>
+          <div class="testimonial-author">
+            <p class="testimonial-author-name">— {testimonial.authorName}</p>
+            <p class="testimonial-author-title">{testimonial.authorTitle}</p>
+          </div>
+        </div>
+      ))}
+
+      <div class="testimonial-dots">
+        {testimonials.map((_, index) => (
+          <button
+            class:list={['testimonial-dot', { 'is-active': index === 0 }]}
+            data-testimonial-dot={index}
+            aria-label={`Go to testimonial ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

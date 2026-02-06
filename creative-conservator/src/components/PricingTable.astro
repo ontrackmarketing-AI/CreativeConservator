@@ -1,0 +1,153 @@
+---
+import { packages, comparisonFeatures, formatPrice } from '../data/pricing';
+---
+
+<div class="pricing-table-wrapper">
+  <table class="pricing-table">
+    <thead>
+      <tr>
+        <th class="pricing-table-feature-col">Features</th>
+        {packages.map((pkg) => (
+          <th class:list={['pricing-table-pkg-col', { 'is-popular': pkg.isPopular }]}>
+            <div class="pricing-table-header">
+              {pkg.isPopular && <span class="pricing-table-badge">Most Popular</span>}
+              <span class="pricing-table-tier">{pkg.tagline}</span>
+              <span class="pricing-table-name">{pkg.name}</span>
+              <span class="pricing-table-price">
+                {formatPrice(pkg.price.min, pkg.price.max)}
+                <small>{pkg.price.suffix}</small>
+              </span>
+            </div>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {comparisonFeatures.map((category) => (
+        <>
+          <tr class="pricing-table-category-row">
+            <td colspan="5">{category.category}</td>
+          </tr>
+          {category.features.map((feature) => (
+            <tr>
+              <td class="pricing-table-feature-name">{feature.name}</td>
+              <td class:list={['pricing-table-cell', { 'has-value': feature.spark }]}>
+                {typeof feature.spark === 'boolean' ? (
+                  feature.spark ? (
+                    <svg class="pricing-table-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  ) : (
+                    <span class="pricing-table-dash">—</span>
+                  )
+                ) : (
+                  <span class="pricing-table-text">{feature.spark}</span>
+                )}
+              </td>
+              <td class:list={['pricing-table-cell', { 'has-value': feature.ignite }]}>
+                {typeof feature.ignite === 'boolean' ? (
+                  feature.ignite ? (
+                    <svg class="pricing-table-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  ) : (
+                    <span class="pricing-table-dash">—</span>
+                  )
+                ) : (
+                  <span class="pricing-table-text">{feature.ignite}</span>
+                )}
+              </td>
+              <td class:list={['pricing-table-cell', 'is-popular', { 'has-value': feature.amplify }]}>
+                {typeof feature.amplify === 'boolean' ? (
+                  feature.amplify ? (
+                    <svg class="pricing-table-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  ) : (
+                    <span class="pricing-table-dash">—</span>
+                  )
+                ) : (
+                  <span class="pricing-table-text">{feature.amplify}</span>
+                )}
+              </td>
+              <td class:list={['pricing-table-cell', { 'has-value': feature.elevate }]}>
+                {typeof feature.elevate === 'boolean' ? (
+                  feature.elevate ? (
+                    <svg class="pricing-table-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  ) : (
+                    <span class="pricing-table-dash">—</span>
+                  )
+                ) : (
+                  <span class="pricing-table-text">{feature.elevate}</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </>
+      ))}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        {packages.map((pkg) => (
+          <td class:list={{ 'is-popular': pkg.isPopular }}>
+            <a href={pkg.ctaHref} class:list={['btn', pkg.isPopular ? 'btn-primary' : 'btn-secondary', 'pricing-table-cta']}>
+              {pkg.ctaText}
+            </a>
+          </td>
+        ))}
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- Mobile Cards View -->
+<div class="pricing-table-mobile">
+  {packages.map((pkg) => (
+    <div class:list={['pricing-mobile-card', { 'is-popular': pkg.isPopular }]}>
+      {pkg.isPopular && <span class="pricing-mobile-badge">Most Popular</span>}
+      <div class="pricing-mobile-header">
+        <span class="pricing-mobile-tier">{pkg.tagline}</span>
+        <h3 class="pricing-mobile-name">{pkg.name}</h3>
+        <div class="pricing-mobile-price">
+          {formatPrice(pkg.price.min, pkg.price.max)}
+          <small>{pkg.price.suffix}</small>
+        </div>
+      </div>
+
+      <details class="pricing-mobile-details">
+        <summary>View all features</summary>
+        <div class="pricing-mobile-features">
+          {comparisonFeatures.map((category) => (
+            <div class="pricing-mobile-category">
+              <h4>{category.category}</h4>
+              <ul>
+                {category.features.map((feature) => {
+                  const value = feature[pkg.id as keyof typeof feature];
+                  if (!value) return null;
+                  return (
+                    <li>
+                      <svg class="pricing-mobile-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      <span>
+                        {feature.name}
+                        {typeof value === 'string' && <em> ({value})</em>}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </details>
+
+      <a href={pkg.ctaHref} class:list={['btn', pkg.isPopular ? 'btn-primary' : 'btn-secondary', 'pricing-mobile-cta']}>
+        {pkg.ctaText}
+      </a>
+    </div>
+  ))}
+</div>

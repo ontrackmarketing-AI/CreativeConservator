@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
+import { articles, getFeaturedArticle } from '../data/articles';
+
+const featuredArticle = getFeaturedArticle();
+const otherArticles = articles.filter((a) => a.id !== featuredArticle?.id);
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Journal' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'The Journal',
+    description: 'Insights on brand strategy, creative inspiration, and cultivating distinction from The Creative Conservator.',
+    publisher: {
+      '@type': 'Organization',
+      name: 'The Creative Conservator',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="The Journal | The Creative Conservator"
+  description="The Journal - Insights on brand strategy, creative inspiration, and cultivating distinction from The Creative Conservator."
+  structuredData={structuredData}
+  currentPath="/journal"
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow="Insights"
+    title="The Journal"
+    lead="Insights on brand strategy, creative inspiration, and cultivating distinction."
+    variant="cream"
+    align="center"
+  />
+
+  <!-- Featured Article -->
+  {featuredArticle && (
+    <section class="section">
+      <div class="container">
+        <header class="section-header" data-reveal="fade-up">
+          <p class="eyebrow">Featured</p>
+          <h2>Latest Insights</h2>
+          <div class="divider"></div>
+        </header>
+
+        <div class="featured-article" data-reveal="fade-up">
+          <div class="featured-article-image">
+            <img
+              src="/images/services/services-creative-process-1200.jpg"
+              alt={featuredArticle.title}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="featured-article-content">
+            <span class="tag">{featuredArticle.category}</span>
+            <h3 class="mt-sm">{featuredArticle.title}</h3>
+            <p class="body-lg mt-md">{featuredArticle.excerpt}</p>
+            {featuredArticle.status === 'coming-soon' ? (
+              <p class="text-small mt-lg" style="color: var(--green); font-weight: 600;">Coming Soon</p>
+            ) : (
+              <a href={`/journal/${featuredArticle.slug}`} class="link-arrow mt-lg" data-transition-link>
+                Read More
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Article Grid -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="article-grid" data-reveal="stagger-up">
+        {otherArticles.map((article, index) => (
+          <div class:list={['article-card-wrapper', { 'offset-down': index === 1 }]}>
+            <article class="article-card">
+              <div class="article-card-image">
+                <img
+                  src="/images/services/services-collaboration-800.jpg"
+                  alt={article.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="tag">{article.category}</span>
+              <h3>{article.title}</h3>
+              <p class="excerpt">{article.excerpt}</p>
+              {article.status === 'coming-soon' ? (
+                <p class="text-caption" style="color: var(--green); font-weight: 600;">Coming Soon</p>
+              ) : (
+                <p class="date">{new Date(article.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+              )}
+            </article>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <NewsletterCTA />
+</BaseLayout>
+
+<style>
+  .featured-article-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .featured-article-content h3 {
+    font-size: var(--text-h2);
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .article-card-wrapper.offset-down {
+    margin-top: 30px;
+  }
+
+  @media (max-width: 1024px) {
+    .article-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .article-card-wrapper.offset-down {
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .article-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

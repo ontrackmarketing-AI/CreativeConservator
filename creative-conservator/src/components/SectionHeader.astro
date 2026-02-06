@@ -1,0 +1,30 @@
+---
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  align?: 'left' | 'center';
+  divider?: boolean;
+  light?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  align = 'left',
+  divider = true,
+  light = false,
+} = Astro.props;
+---
+
+<header class:list={['section-header', { 'text-center': align === 'center' }]} data-reveal="fade-up">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h2 class:list={{ 'text-cream': light }}>{title}</h2>
+  {divider && <div class:list={['divider', { 'divider-center': align === 'center' }]}></div>}
+  {intro && (
+    <p class:list={['intro', { 'text-cream': light, 'mx-auto': align === 'center' }]}>
+      {intro}
+    </p>
+  )}
+</header>

@@ -1,0 +1,18 @@
+---
+import { addOns, formatPrice } from '../data/pricing';
+---
+
+<div class="addons-grid">
+  {addOns.map((addon) => (
+    <div class="addon-card">
+      <div class="addon-content">
+        <h4 class="addon-name">{addon.name}</h4>
+        <p class="addon-description">{addon.description}</p>
+      </div>
+      <div class="addon-price">
+        <span class="addon-price-value">{formatPrice(addon.price.min, addon.price.max)}</span>
+        <span class="addon-price-suffix">{addon.price.suffix}</span>
+      </div>
+    </div>
+  ))}
+</div>

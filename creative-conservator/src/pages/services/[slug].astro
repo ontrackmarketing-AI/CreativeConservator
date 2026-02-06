@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ProcessTimeline from '../../components/ProcessTimeline.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import { services, getServiceBySlug, getRelatedServices } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const relatedServices = getRelatedServices(service.slug, 3);
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.creativeconservator.com/services/' },
+      { '@type': 'ListItem', position: 3, name: service.title },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.fullDescription,
+    provider: {
+      '@type': 'Organization',
+      name: 'The Creative Conservator',
+      url: 'https://www.creativeconservator.com',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title={`${service.title} | The Creative Conservator`}
+  description={service.metaDescription}
+  twitterDescription={service.twitterDescription}
+  structuredData={structuredData}
+  currentPath={`/services/${service.slug}`}
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow="Our Services"
+    title={service.title}
+    lead={service.shortDescription}
+    variant="cream"
+    align="center"
+    breadcrumb={{
+      items: [
+        { label: 'Home', href: '/' },
+        { label: 'Services', href: '/services' },
+        { label: service.title },
+      ],
+    }}
+  />
+
+  <!-- Description Section -->
+  <section class="section">
+    <div class="container">
+      <div class="service-detail-grid">
+        <div class="service-description" data-reveal="fade-up">
+          <h2>What Is {service.title}?</h2>
+          <div class="divider"></div>
+          <p class="body-lg">{service.fullDescription}</p>
+        </div>
+        <div class="service-image" data-reveal="fade-left">
+          <img
+            src="/images/services/services-collaboration-800.jpg"
+            alt={`${service.title} service illustration`}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's Included (if applicable) -->
+  {service.included && service.included.length > 0 && (
+    <section class="section section-cream">
+      <div class="container">
+        <header class="section-header text-center" data-reveal="fade-up">
+          <p class="eyebrow">Deliverables</p>
+          <h2>What's Included</h2>
+          <div class="divider divider-center"></div>
+        </header>
+
+        <div class="included-strip" data-reveal="stagger-up">
+          {service.included.map((item) => (
+            <div class="included-card">
+              <div class="included-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h4>{item.title}</h4>
+                <p class="text-small mt-xs">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Outcome (if applicable) -->
+  {service.outcome && (
+    <section class="section">
+      <div class="container-narrow">
+        <div class="outcome-block" data-reveal="fade-up">
+          <p class="eyebrow text-center">The Result</p>
+          <blockquote class="outcome-quote">
+            {service.outcome}
+          </blockquote>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Process -->
+  <ProcessTimeline />
+
+  <!-- Related Services -->
+  <section class="section section-cream">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">Explore More</p>
+        <h2>Related Services</h2>
+        <div class="divider divider-center"></div>
+      </header>
+
+      <div class="related-services" data-reveal="stagger-up">
+        {relatedServices.map((relatedService) => (
+          <ServiceCard service={relatedService} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container-narrow text-center" data-reveal="fade-up">
+      <h2>Ready to Start with {service.title}?</h2>
+      <div class="divider divider-center"></div>
+      <p class="lead">
+        Let's discuss how {service.title.toLowerCase()} can elevate your brand.
+      </p>
+      <a href="/contact" class="btn btn-primary mt-xl" data-transition-link>
+        Start a Project
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service-detail-grid {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .service-image {
+    position: relative;
+  }
+
+  .service-image img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    clip-path: polygon(0 0, 100% 2%, 98% 98%, 0% 100%);
+  }
+
+  @media (max-width: 768px) {
+    .service-detail-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .outcome-block {
+    text-align: center;
+  }
+
+  .outcome-quote {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--deep-red);
+    border-left: 4px solid var(--green);
+    padding-left: var(--space-xl);
+    margin-top: var(--space-xl);
+    text-align: left;
+  }
+</style>

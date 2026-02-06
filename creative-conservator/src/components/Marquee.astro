@@ -1,0 +1,53 @@
+---
+export interface Props {
+  row1Items?: string[];
+  row2Items?: string[];
+}
+
+const {
+  row1Items = [
+    'Cultivating Artistry',
+    'Crafting Identity',
+    'Preserving Expression',
+    'Strategic Vision',
+    'Intentional Design',
+  ],
+  row2Items = [
+    'Content Creation',
+    'Brand Strategy',
+    'Identity Development',
+    'Social Media',
+    'Marketing Campaigns',
+  ],
+} = Astro.props;
+
+// Duplicate items for seamless loop
+const row1Doubled = [...row1Items, ...row1Items];
+const row2Doubled = [...row2Items, ...row2Items];
+---
+
+<section class="marquee" aria-hidden="true">
+  <!-- Row 1: Scrolls Left -->
+  <div class="marquee-row marquee-row-left">
+    <div class="marquee-track">
+      {row1Doubled.map((item) => (
+        <span class="marquee-item">
+          {item}
+          <span class="marquee-separator">&#9830;</span>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Row 2: Scrolls Right -->
+  <div class="marquee-row marquee-row-right">
+    <div class="marquee-track">
+      {row2Doubled.map((item) => (
+        <span class="marquee-item">
+          {item}
+          <span class="marquee-separator">&#9830;</span>
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

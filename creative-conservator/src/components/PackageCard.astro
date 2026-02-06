@@ -1,0 +1,216 @@
+---
+import type { Package } from '../data/pricing';
+import { formatPrice } from '../data/pricing';
+
+export interface Props {
+  package: Package;
+}
+
+const { package: pkg } = Astro.props;
+const priceDisplay = formatPrice(pkg.price.min, pkg.price.max);
+---
+
+<div class:list={['package-card', { 'is-popular': pkg.isPopular }]}>
+  {pkg.isPopular && (
+    <div class="package-badge">Most Popular</div>
+  )}
+
+  <div class="package-card-header">
+    <span class="package-tier-label">{pkg.tagline}</span>
+    <h3 class="package-tier-name">{pkg.name}</h3>
+  </div>
+
+  <div class="package-price-block">
+    <span class="package-price">{priceDisplay}</span>
+    <span class="package-suffix">{pkg.price.suffix}</span>
+    {pkg.price.note && <span class="package-note">{pkg.price.note}</span>}
+  </div>
+
+  <p class="package-target">{pkg.target}</p>
+
+  <div class="package-meta">
+    {pkg.timeline && (
+      <div class="package-meta-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>{pkg.timeline}</span>
+      </div>
+    )}
+    {pkg.commitment && (
+      <div class="package-meta-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span>{pkg.commitment}</span>
+      </div>
+    )}
+  </div>
+
+  <a href={`/packages/${pkg.slug}`} class:list={['btn', pkg.isPopular ? 'btn-primary' : 'btn-secondary', 'package-cta']} data-transition-link>
+    Learn More
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="package-cta-arrow">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+  </a>
+</div>
+
+<style>
+  .package-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xl);
+    background-color: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: var(--radius-md);
+    position: relative;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  .package-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .package-card.is-popular {
+    border-color: var(--deep-red);
+    border-width: 2px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .package-card.is-popular:hover {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .package-badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: var(--space-xs) var(--space-lg);
+    background-color: var(--deep-red);
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+
+  .package-card-header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .package-tier-label {
+    display: block;
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: var(--space-xs);
+  }
+
+  .package-tier-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 600;
+    color: var(--deep-red);
+  }
+
+  .package-price-block {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .package-price {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--deep-red);
+    line-height: 1.1;
+  }
+
+  .package-suffix {
+    display: block;
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--vintage-wine);
+    opacity: 0.7;
+    margin-top: var(--space-xs);
+  }
+
+  .package-note {
+    display: block;
+    font-size: var(--text-caption);
+    font-style: italic;
+    color: var(--vintage-wine);
+    opacity: 0.6;
+    margin-top: var(--space-xs);
+  }
+
+  .package-target {
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--vintage-wine);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    flex-grow: 1;
+  }
+
+  .package-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-md);
+    background-color: var(--cream);
+    border-radius: var(--radius-sm);
+  }
+
+  .package-meta-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-size: var(--text-small);
+    color: var(--vintage-wine);
+  }
+
+  .package-meta-item svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--green);
+  }
+
+  .package-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .package-cta-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .package-cta:hover .package-cta-arrow {
+    transform: translateX(4px);
+  }
+</style>

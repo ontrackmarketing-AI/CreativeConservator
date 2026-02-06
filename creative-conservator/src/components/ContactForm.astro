@@ -1,0 +1,69 @@
+---
+import { services } from '../data/services';
+---
+
+<form class="contact-form" data-contact-form>
+  <div class="form-group form-group-underline">
+    <label for="name" class="form-label">Name *</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      class="form-input"
+      placeholder="Your full name"
+      required
+    />
+  </div>
+
+  <div class="form-group form-group-underline">
+    <label for="email" class="form-label">Email *</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      class="form-input"
+      placeholder="your@email.com"
+      required
+    />
+  </div>
+
+  <div class="form-group form-group-underline">
+    <label for="company" class="form-label">Company</label>
+    <input
+      type="text"
+      id="company"
+      name="company"
+      class="form-input"
+      placeholder="Your company name (optional)"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="service" class="form-label">Service Interest</label>
+    <select id="service" name="service" class="form-select">
+      <option value="">Select a service...</option>
+      {services.map((service) => (
+        <option value={service.id}>{service.title}</option>
+      ))}
+      <option value="not-sure">Not sure yet</option>
+    </select>
+  </div>
+
+  <div class="form-group form-group-underline">
+    <label for="message" class="form-label">Message *</label>
+    <textarea
+      id="message"
+      name="message"
+      class="form-textarea"
+      placeholder="Tell us about your project or how we can help..."
+      required
+    ></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Send Message</button>
+
+  <div class="form-success mt-xl" data-form-success>
+    <p><strong>Thank you!</strong></p>
+    <p>Your message has been sent successfully. We'll get back to you soon.</p>
+  </div>
+</form>

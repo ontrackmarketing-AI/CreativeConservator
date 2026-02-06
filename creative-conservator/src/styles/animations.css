@@ -1,0 +1,189 @@
+/* ==========================================================================
+   ANIMATIONS — @keyframes, reveal states, marquee, scroll-triggered
+   ========================================================================== */
+
+/* ---------- Page Load ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Scroll Reveal Initial States ---------- */
+/* Elements with data-reveal are invisible until GSAP triggers them */
+[data-reveal] {
+  will-change: transform, opacity;
+}
+
+[data-reveal="fade-up"] {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+[data-reveal="fade-left"] {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+[data-reveal="fade-right"] {
+  opacity: 0;
+  transform: translateX(60px);
+}
+
+[data-reveal="stagger-up"] > * {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+[data-reveal="clip-up"] {
+  clip-path: inset(100% 0 0 0);
+}
+
+[data-reveal="split-lines"] {
+  overflow: hidden;
+}
+
+[data-reveal="split-lines"] .line {
+  transform: translateY(100%);
+  display: block;
+}
+
+[data-reveal="scale-in"] {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* Once revealed, remove will-change for performance */
+[data-reveal].revealed {
+  will-change: auto;
+}
+
+/* ---------- Marquee ---------- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: var(--space-xl);
+}
+
+.marquee-row-left .marquee-track {
+  animation: marqueeLeft 40s linear infinite;
+}
+
+.marquee-row-right .marquee-track {
+  animation: marqueeRight 40s linear infinite;
+}
+
+@keyframes marqueeLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Pause marquee on hover */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---------- Hero Clip-Path Image ---------- */
+@keyframes heroImageReveal {
+  from {
+    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 20% 100%);
+    transform: scale(1.05);
+  }
+  to {
+    clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: scale(1);
+  }
+}
+
+/* ---------- Scroll Progress Bar ---------- */
+@keyframes growWidth {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* ---------- Process Line Draw ---------- */
+@keyframes lineDrawHorizontal {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ---------- Accordion Expand ---------- */
+@keyframes accordionBorderGrow {
+  from { height: 0; }
+  to { height: 100%; }
+}
+
+/* ---------- Loading Pulse (for skeleton states) ---------- */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ---------- Subtle Float (decorative elements) ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ---------- Carousel Cross-Fade ---------- */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOutSlide {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+/* ---------- Reduced Motion Override ---------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+}

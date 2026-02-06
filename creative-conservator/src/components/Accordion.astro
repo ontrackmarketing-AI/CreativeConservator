@@ -1,0 +1,11 @@
+---
+export interface Props {
+  allowMultiple?: boolean;
+}
+
+const { allowMultiple = false } = Astro.props;
+---
+
+<div class="accordion" data-accordion data-allow-multiple={allowMultiple ? 'true' : 'false'}>
+  <slot />
+</div>

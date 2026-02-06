@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Accordion from '../components/Accordion.astro';
+import AccordionItem from '../components/AccordionItem.astro';
+import { contactFaqs } from '../data/faqs';
+import { contactInfo } from '../data/navigation';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Contact' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact The Creative Conservator',
+    description: 'Get in touch with The Creative Conservator to discuss your brand strategy and creative marketing needs.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: contactFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Contact Us | The Creative Conservator"
+  description="Contact The Creative Conservator - Let's discuss how we can preserve and elevate your brand through intentional creative strategy and content creation."
+  structuredData={structuredData}
+  currentPath="/contact"
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow="Get in Touch"
+    title="Let's Start a Conversation"
+    lead="Let's discuss how we can preserve and elevate your brand."
+    variant="cream"
+    align="center"
+  />
+
+  <!-- Contact Form + Info Section -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+        <div class="contact-form-wrapper" data-reveal="fade-up">
+          <ContactForm />
+        </div>
+
+        <div class="contact-info" data-reveal="fade-left">
+          <h3>Get in Touch</h3>
+          <div class="divider"></div>
+
+          <div class="contact-card mt-xl">
+            <h4>Email</h4>
+            <a href={`mailto:${contactInfo.email}`} class="contact-link">
+              {contactInfo.email}
+            </a>
+          </div>
+
+          <div class="contact-card mt-lg">
+            <h4>Social</h4>
+            <a href={contactInfo.instagramUrl} target="_blank" rel="noopener noreferrer" class="contact-link">
+              {contactInfo.instagram}
+            </a>
+          </div>
+
+          <p class="response-time mt-xl">
+            {contactInfo.responseTime}
+          </p>
+
+          <div class="contact-image mt-xl">
+            <img
+              src="/images/services/services-collaboration-400.jpg"
+              alt="Creative collaboration"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section section-cream">
+    <div class="container-narrow">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">Have Questions?</p>
+        <h2>Frequently Asked Questions</h2>
+        <div class="divider divider-center"></div>
+      </header>
+
+      <div data-reveal="fade-up">
+        <Accordion>
+          {contactFaqs.map((faq, index) => (
+            <AccordionItem title={faq.question} isOpen={index === 0}>
+              <p>{faq.answer}</p>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: var(--space-3xl);
+  }
+
+  .contact-info {
+    padding-left: var(--space-xl);
+  }
+
+  .contact-card {
+    padding: var(--space-lg);
+    background-color: var(--cream);
+    border-radius: var(--radius-md);
+  }
+
+  .contact-card h4 {
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: var(--space-xs);
+  }
+
+  .contact-link {
+    font-size: var(--text-body-lg);
+    color: var(--deep-red);
+    text-decoration: none;
+    transition: opacity var(--duration-fast);
+  }
+
+  .contact-link:hover {
+    opacity: 0.75;
+  }
+
+  .response-time {
+    font-size: var(--text-small);
+    color: var(--vintage-wine);
+    opacity: 0.75;
+    font-style: italic;
+  }
+
+  .contact-image img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (max-width: 768px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .contact-info {
+      padding-left: 0;
+      order: -1;
+      text-align: center;
+    }
+
+    .contact-info .divider {
+      margin-inline: auto;
+    }
+
+    .contact-image {
+      display: none;
+    }
+  }
+</style>

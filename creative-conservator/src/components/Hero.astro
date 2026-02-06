@@ -1,0 +1,138 @@
+---
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  image?: string;
+  imageAlt?: string;
+  variant?: 'full-bleed' | 'cream' | 'dark';
+  align?: 'center' | 'left';
+  breadcrumb?: {
+    items: { label: string; href?: string }[];
+  };
+  primaryCta?: {
+    text: string;
+    href: string;
+  };
+  secondaryCta?: {
+    text: string;
+    href: string;
+  };
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  image,
+  imageAlt = '',
+  variant = 'full-bleed',
+  align = 'center',
+  breadcrumb,
+  primaryCta,
+  secondaryCta,
+} = Astro.props;
+
+const hasImage = variant === 'full-bleed' && image;
+---
+
+<section class:list={[
+  'hero',
+  `hero--${variant}`,
+  `hero--${align}`,
+  { 'hero-full': hasImage, 'hero-cream': variant === 'cream' }
+]}>
+  {hasImage && (
+    <div class="hero-full-bg">
+      <img src={image} alt={imageAlt} loading="eager" decoding="async" />
+    </div>
+  )}
+  {hasImage && <div class="hero-full-overlay gradient-dark-diagonal"></div>}
+
+  <div class:list={['container', { 'hero-full-content': hasImage }]}>
+    <div class:list={['hero-content', { 'text-center': align === 'center' }]} data-reveal="fade-up">
+      {breadcrumb && (
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          {breadcrumb.items.map((item, index) => (
+            <>
+              {item.href ? (
+                <a href={item.href} data-transition-link>{item.label}</a>
+              ) : (
+                <span class="current">{item.label}</span>
+              )}
+              {index < breadcrumb.items.length - 1 && <span class="separator">/</span>}
+            </>
+          ))}
+        </nav>
+      )}
+
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1 class:list={['display-sm', { 'text-cream': hasImage || variant === 'dark' }]} data-reveal="split-lines">
+        {title}
+      </h1>
+      {lead && (
+        <p class:list={['lead', 'mt-lg', { 'text-cream': hasImage || variant === 'dark' }]} style="max-width: 700px; margin-inline: auto;">
+          {lead}
+        </p>
+      )}
+      {(primaryCta || secondaryCta) && (
+        <div class="hero-ctas mt-xl" data-reveal="stagger-up">
+          {primaryCta && (
+            <a
+              href={primaryCta.href}
+              class:list={['btn', hasImage || variant === 'dark' ? 'btn-light' : 'btn-primary']}
+              data-transition-link
+            >
+              {primaryCta.text}
+            </a>
+          )}
+          {secondaryCta && (
+            <a
+              href={secondaryCta.href}
+              class:list={['btn', 'btn-secondary', { 'btn-secondary--light': hasImage || variant === 'dark' }]}
+              data-transition-link
+            >
+              {secondaryCta.text}
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero--center .hero-content {
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .hero--left .hero-content {
+    max-width: 700px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .hero--center .hero-ctas {
+    justify-content: center;
+  }
+
+  .btn-secondary--light {
+    border-color: var(--cream);
+    color: var(--cream);
+  }
+
+  .btn-secondary--light:hover {
+    background-color: var(--cream);
+    color: var(--deep-red);
+  }
+</style>

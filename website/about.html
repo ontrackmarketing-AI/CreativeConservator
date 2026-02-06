@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about The Creative Conservator - a modern creative marketing studio founded by Darya, devoted to preserving the artistry at the heart of every brand.">
+  <title>About Us | The Creative Conservator</title>
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.creativeconservator.com/about">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About Us | The Creative Conservator">
+  <meta property="og:description" content="A modern creative marketing studio devoted to preserving the artistry at the heart of every brand.">
+  <meta property="og:url" content="https://www.creativeconservator.com/about">
+  <meta property="og:image" content="https://www.creativeconservator.com/images/og/og-home.jpg">
+  <meta property="og:site_name" content="The Creative Conservator">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Us | The Creative Conservator">
+  <meta name="twitter:description" content="A modern creative marketing studio devoted to preserving the artistry at the heart of every brand.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+
+  <!-- JSON-LD Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.creativeconservator.com/" },
+      { "@type": "ListItem", "position": 2, "name": "About", "item": "https://www.creativeconservator.com/about" }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Page-specific styles for About page */
+    .hero-about {
+      padding: calc(80px + var(--spacing-3xl)) 0 var(--spacing-3xl);
+      text-align: center;
+    }
+    .hero-about h1 { margin-bottom: var(--spacing-md); }
+    .hero-about .lead { max-width: 600px; margin: 0 auto; }
+
+    .definition-section { padding: var(--spacing-3xl) 0; background-color: var(--white); }
+    .definition-block {
+      max-width: 700px; margin: 0 auto; padding: var(--spacing-xl);
+      background-color: var(--cream); border-left: 4px solid var(--deep-red); border-radius: var(--radius-md);
+    }
+    .definition-term { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700; color: var(--deep-red); letter-spacing: 0.1em; margin-bottom: var(--spacing-xs); }
+    .definition-pronunciation { font-family: var(--font-body); font-size: 1rem; font-style: italic; color: var(--vintage-wine); margin-bottom: var(--spacing-xs); }
+    .definition-pos { font-family: var(--font-body); font-size: 0.875rem; font-weight: 500; color: var(--green); margin-bottom: var(--spacing-md); }
+    .definition-text { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.7; color: var(--vintage-wine); margin: 0; }
+
+    .about-content-section { padding: var(--spacing-3xl) 0; background-color: var(--white); }
+    .about-content { max-width: 800px; margin: 0 auto; }
+    .about-content p { font-size: 1.125rem; line-height: 1.8; color: var(--vintage-wine); }
+
+    .purpose-mission-section { padding: var(--spacing-3xl) 0; background-color: var(--cream); }
+    .purpose-mission-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-2xl); max-width: 1000px; margin: 0 auto; }
+    @media (min-width: 768px) { .purpose-mission-grid { grid-template-columns: 1fr 1fr; } }
+    .purpose-block, .mission-block { padding: var(--spacing-xl); background-color: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+    .purpose-block h2, .mission-block h2 { font-size: 1.5rem; margin-bottom: var(--spacing-md); }
+    .purpose-block p, .mission-block p { line-height: 1.8; color: var(--vintage-wine); margin: 0; }
+
+    .values-section { padding: var(--spacing-3xl) 0; background-color: var(--white); }
+    .values-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); }
+    @media (min-width: 768px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .values-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; margin-left: auto; margin-right: auto; } }
+    .value-card { padding: var(--spacing-lg); background-color: var(--cream); border-radius: var(--radius-md); transition: transform var(--transition-base), box-shadow var(--transition-base); }
+    .value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .value-card h3 { font-size: 1.25rem; color: var(--deep-red); margin-bottom: var(--spacing-sm); }
+    .value-card p { font-size: 0.9375rem; line-height: 1.7; color: var(--vintage-wine); margin: 0; }
+
+    .founder-section { padding: var(--spacing-3xl) 0; background-color: var(--cream); }
+    .founder-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-xl); align-items: center; max-width: 900px; margin: 0 auto; }
+    @media (min-width: 768px) { .founder-grid { grid-template-columns: 280px 1fr; } }
+    .founder-content h2 { font-size: 1.5rem; margin-bottom: var(--spacing-xs); }
+    .founder-name { font-family: var(--font-heading); font-size: 1.25rem; font-style: italic; color: var(--green); margin-bottom: var(--spacing-md); }
+    .founder-content p { line-height: 1.8; color: var(--vintage-wine); }
+
+    .cta-section { padding: var(--spacing-3xl) 0; }
+    .cta-section p { max-width: 500px; margin: 0 auto var(--spacing-lg); }
+  </style>
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-text">The Creative Conservator</span>
+        </a>
+        <nav class="nav-desktop" aria-label="Main navigation">
+          <ul class="nav-list">
+            <li><a href="about.html" class="nav-link active">About</a></li>
+            <li><a href="services.html" class="nav-link">Services</a></li>
+            <li><a href="work.html" class="nav-link">Work</a></li>
+            <li><a href="journal.html" class="nav-link">Journal</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="nav-mobile" aria-label="Mobile navigation">
+      <ul class="nav-list">
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="journal.html" class="nav-link">Journal</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-about hero-image-bg" style="background-image: url('images/hero/hero-perfume-detail-1920.jpg');">
+      <div class="container">
+        <h1>About Us</h1>
+        <p class="lead">Preserving the artistry at the heart of every brand</p>
+      </div>
+    </section>
+
+    <!-- "Conserve" Definition Block -->
+    <section class="definition-section">
+      <div class="container">
+        <div class="definition-block">
+          <div class="definition-term">CONSERVE</div>
+          <div class="definition-pronunciation">/ kon-surv /</div>
+          <div class="definition-pos">[verb]</div>
+          <p class="definition-text">To preserve the essence of creative expression&#8212;protecting its meaning, artistry, and identity while shaping its evolution with intention</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Content Section -->
+    <section class="about-content-section">
+      <div class="container">
+        <div class="about-content">
+          <p>The Creative Conservator is a modern creative marketing studio devoted to preserving the artistry at the heart of every brand. We blend intentional strategy with refined content creation&#8212;photography, videography, social media, and storytelling&#8212;to shape identities that feel timeless, compelling, and unmistakably distinct.</p>
+          <p>Our work protects the essence of a brand while elevating how it's seen, heard, and remembered across every digital touchpoint. We don't just create content; we conserve creative expression and translate it into intelligent strategy that amplifies and sustains brand presence.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Purpose & Mission Section -->
+    <section class="purpose-mission-section">
+      <div class="container">
+        <div class="purpose-mission-grid">
+          <div class="purpose-block">
+            <h2>Purpose</h2>
+            <p>Our purpose is to preserve the essence of creative expression&#8212;protecting meaning, artistry, and identity&#8212;while guiding its evolution with intention, so experience-driven brands can grow without losing who they are.</p>
+          </div>
+          <div class="mission-block">
+            <h2>Mission</h2>
+            <p>Our mission is to help experience-driven brands preserve the integrity of their identity while evolving with intention. Through content strategy and content creation, we provide clear, disciplined, and strategically guided creative work that eliminates reactive content, protects brand coherence, and supports long-term growth through partnership, not production.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Values</h2>
+          <div class="divider"></div>
+        </div>
+        <div class="values-grid">
+          <div class="value-card">
+            <h3>Intentional Creativity</h3>
+            <p>Creativity is not decoration&#8212;it's a tool. Every visual, word, and concept exists for a reason and supports a defined objective.</p>
+          </div>
+          <div class="value-card">
+            <h3>Clarity</h3>
+            <p>Clarity governs our approach to positioning, messaging, and intent. We lead with strategy, emphasizing disciplined execution and purposeful creative decisions.</p>
+          </div>
+          <div class="value-card">
+            <h3>Respect for Integrity</h3>
+            <p>We treat brand identity as something to be protected, maintaining its integrity through consistency, long-term thinking, and the refusal of misaligned initiatives.</p>
+          </div>
+          <div class="value-card">
+            <h3>Evolution</h3>
+            <p>Brands should evolve with intention, adapting and modernizing without compromising their core identity. Growth is guided by strategy, protecting what works while refining what does not.</p>
+          </div>
+          <div class="value-card">
+            <h3>Partnership</h3>
+            <p>We work collaboratively and strategically with our clients. Our role extends beyond delivery, encompassing clear guidance, direct feedback, and shared accountability for results.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section class="founder-section">
+      <div class="container">
+        <div class="founder-grid">
+          <div class="founder-image">
+            <picture>
+              <source srcset="images/founder/founder-darya-creative-560.webp" type="image/webp">
+              <img src="images/founder/founder-darya-creative-560.jpg"
+                   alt="Darya, founder of The Creative Conservator, reviewing creative work"
+                   width="560" height="747"
+                   loading="lazy">
+            </picture>
+          </div>
+          <div class="founder-content">
+            <h2>The Founder</h2>
+            <p class="founder-name">Darya</p>
+            <p>Bringing a unique blend of marketing strategy, sales experience, and global perspective shaped by modeling and extensive international travel. With a strong eye for storytelling and brand presence, she focuses on creating campaigns that go beyond promotion&#8212;turning marketing into an experience brands feel, remember, and live through. She is currently studying digital marketing to continuously refine her craft in a fast-evolving industry.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Begin?</h2>
+        <p>Let's discuss how we can preserve and elevate your brand.</p>
+        <div class="cta-buttons">
+          <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">The Creative Conservator</span>
+          <p>A modern creative marketing studio devoted to preserving the artistry at the heart of every brand.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-heading">Navigation</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="about.html" class="footer-link">About</a>
+            <a href="services.html" class="footer-link">Services</a>
+            <a href="work.html" class="footer-link">Work</a>
+            <a href="journal.html" class="footer-link">Journal</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+          </div>
+        </div>
+        <div class="footer-services">
+          <h4 class="footer-heading">Services</h4>
+          <div class="footer-links">
+            <a href="services/content-creation.html" class="footer-link">Content Creation</a>
+            <a href="services/content-strategy.html" class="footer-link">Content Strategy</a>
+            <a href="services/brand-strategy.html" class="footer-link">Brand Strategy</a>
+            <a href="services/social-media.html" class="footer-link">Social Media</a>
+          </div>
+        </div>
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <a href="mailto:Darya@creativeconservator.com" class="footer-link">Darya@creativeconservator.com</a>
+          </div>
+          <div class="footer-social">
+            <a href="https://instagram.com/creativeconservator" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2026 The Creative Conservator. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js" defer></script>
+</body>
+</html>

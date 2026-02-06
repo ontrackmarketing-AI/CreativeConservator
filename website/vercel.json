@@ -1,0 +1,44 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/styles/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+      ]
+    },
+    {
+      "source": "/scripts/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/work", "destination": "/work.html" },
+    { "source": "/journal", "destination": "/journal.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/services/content-creation", "destination": "/services/content-creation.html" },
+    { "source": "/services/content-strategy", "destination": "/services/content-strategy.html" },
+    { "source": "/services/brand-strategy", "destination": "/services/brand-strategy.html" },
+    { "source": "/services/identity-development", "destination": "/services/identity-development.html" },
+    { "source": "/services/social-media", "destination": "/services/social-media.html" },
+    { "source": "/services/marketing-campaigns", "destination": "/services/marketing-campaigns.html" },
+    { "source": "/services/paid-advertising", "destination": "/services/paid-advertising.html" }
+  ]
+}

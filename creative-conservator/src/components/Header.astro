@@ -1,0 +1,77 @@
+---
+import { mainNavLinks } from '../data/navigation';
+
+export interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+---
+
+<header class="header" id="header">
+  <div class="container">
+    <div class="header-inner">
+      <!-- Logo -->
+      <a href="/" class="logo" data-transition-link>
+        <span class="logo-text">The Creative Conservator</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <ul class="nav-list">
+          {mainNavLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class:list={['nav-link', { active: currentPath.startsWith(link.href) }]}
+                data-transition-link
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        class="mobile-menu-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        id="mobile-menu-toggle"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <ul class="nav-list">
+      {mainNavLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={['nav-link', { active: currentPath.startsWith(link.href) }]}
+            data-transition-link
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

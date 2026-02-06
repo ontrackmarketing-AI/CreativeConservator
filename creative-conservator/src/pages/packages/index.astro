@@ -1,0 +1,454 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import PackageCard from '../../components/PackageCard.astro';
+import PricingTable from '../../components/PricingTable.astro';
+import AddOns from '../../components/AddOns.astro';
+import Accordion from '../../components/Accordion.astro';
+import AccordionItem from '../../components/AccordionItem.astro';
+import { packages, upgradePaths, pricingFaqs, formatPrice } from '../../data/pricing';
+
+// Separate packages by type
+const foundationPackages = packages.filter(pkg => pkg.type === 'one-time');
+const retainerPackages = packages.filter(pkg => pkg.type === 'retainer');
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Packages' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Creative Marketing Packages',
+    description: 'Service packages for brand strategy, identity development, content creation, and ongoing marketing support.',
+    brand: {
+      '@type': 'Brand',
+      name: 'The Creative Conservator',
+    },
+    offers: packages.map((pkg) => ({
+      '@type': 'Offer',
+      name: pkg.name,
+      description: pkg.tagline,
+      price: pkg.price.min,
+      priceCurrency: 'USD',
+      priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: pricingFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Packages & Pricing | The Creative Conservator"
+  description="Explore our service packages - from brand foundations to full-service creative partnerships. Find the right level of support for your brand's growth journey."
+  structuredData={structuredData}
+  currentPath="/packages"
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow="Packages & Pricing"
+    title="Find Your Perfect Fit"
+    lead="From establishing your foundation to scaling with full creative partnership, choose the level of support that matches your brand's journey."
+    variant="cream"
+    align="center"
+  />
+
+  <!-- Section 1: Foundation Packages (One-Time) -->
+  <section class="section">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">One-Time Projects</p>
+        <h2>Build Your Foundation</h2>
+        <p class="intro mx-auto" style="max-width: 650px;">
+          These one-time branding projects establish the core identity and strategy your business needs. Perfect for new brands or those ready to invest in a professional refresh.
+        </p>
+      </header>
+
+      <div class="package-type-badge foundation-badge" data-reveal="fade-up">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+        <span>One-Time Investment</span>
+      </div>
+
+      <div class="foundation-packages" data-reveal="stagger-up">
+        {foundationPackages.map((pkg) => (
+          <PackageCard package={pkg} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Retainer Packages (Monthly) -->
+  <section class="section section-cream">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">Monthly Retainers</p>
+        <h2>Grow With Us</h2>
+        <p class="intro mx-auto" style="max-width: 650px;">
+          These ongoing partnerships provide consistent creative support to grow your brand. Best for businesses with established brand guidelines ready to scale their presence.
+        </p>
+      </header>
+
+      <div class="package-type-badge retainer-badge" data-reveal="fade-up">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+          <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+        <span>Monthly Partnership</span>
+      </div>
+
+      <div class="retainer-notice" data-reveal="fade-up">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <p><strong>Note:</strong> Retainer packages work best for brands that already have established visual identity and brand guidelines. If you don't have these yet, we recommend starting with Spark or Ignite first.</p>
+      </div>
+
+      <div class="retainer-packages" data-reveal="stagger-up">
+        {retainerPackages.map((pkg) => (
+          <PackageCard package={pkg} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Comparison Section -->
+  <section class="section">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">Compare</p>
+        <h2>What's Included at Each Level</h2>
+        <p class="intro mx-auto" style="max-width: 650px;">
+          A detailed look at what you get with each package. Not sure which is right for you? Book a discovery call and we'll help you decide.
+        </p>
+      </header>
+
+      <div data-reveal="fade-up">
+        <PricingTable />
+      </div>
+    </div>
+  </section>
+
+  <!-- Upgrade Paths Section -->
+  <section class="section section-cream">
+    <div class="container-narrow">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">Your Journey</p>
+        <h2>The Path Forward</h2>
+        <p class="intro mx-auto" style="max-width: 550px;">
+          Our packages are designed to grow with you. Start where you are and upgrade as your needs evolve.
+        </p>
+      </header>
+
+      <div class="upgrade-paths" data-reveal="stagger-up">
+        {upgradePaths.map((path) => (
+          <div class="upgrade-path-card">
+            <div class="upgrade-path-arrow">
+              <span class="upgrade-path-tier">{path.from.charAt(0).toUpperCase() + path.from.slice(1)}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+              <span class="upgrade-path-tier">{path.to.charAt(0).toUpperCase() + path.to.slice(1)}</span>
+            </div>
+            <p class="upgrade-path-message">"{path.message}"</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Add-Ons Section -->
+  <section class="section">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">Customize</p>
+        <h2>Add-On Services</h2>
+        <p class="intro mx-auto" style="max-width: 600px;">
+          Need something specific? Add these services to any package to create your perfect solution.
+        </p>
+      </header>
+
+      <div data-reveal="fade-up">
+        <AddOns />
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Choose Section -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="choose-guide-grid">
+        <div class="choose-guide-content" data-reveal="fade-right">
+          <p class="eyebrow">Guidance</p>
+          <h2>Not Sure Where to Start?</h2>
+          <div class="divider"></div>
+          <p class="body-lg mt-lg">
+            Choosing the right package depends on where you are in your brand journey and what you need right now.
+          </p>
+
+          <div class="choose-options mt-xl">
+            <div class="choose-option">
+              <h4>Just Starting Out?</h4>
+              <p>If you're a new business or solopreneur without established branding, <strong>Spark</strong> gives you the essentials to get started.</p>
+            </div>
+
+            <div class="choose-option">
+              <h4>Ready to Build a Real Foundation?</h4>
+              <p>If you're committed to doing branding right, <strong>Ignite</strong> provides the comprehensive brand system you need to grow with confidence.</p>
+            </div>
+
+            <div class="choose-option">
+              <h4>Have a Brand, Need Consistency?</h4>
+              <p>If you already have brand guidelines but need ongoing content and social media support, <strong>Amplify</strong> is designed for you.</p>
+            </div>
+
+            <div class="choose-option">
+              <h4>Scaling Aggressively?</h4>
+              <p>If you're ready for full-service creative partnership including paid advertising and campaigns, <strong>Elevate</strong> provides everything you need.</p>
+            </div>
+          </div>
+
+          <a href="/contact" class="btn btn-primary mt-xl" data-transition-link>
+            Book a Discovery Call
+          </a>
+        </div>
+
+        <div class="choose-guide-image" data-reveal="fade-left">
+          <img
+            src="/images/services/services-collaboration-400.jpg"
+            alt="Strategic consultation"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container-narrow">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">Questions?</p>
+        <h2>Pricing FAQs</h2>
+        <div class="divider divider-center"></div>
+      </header>
+
+      <div data-reveal="fade-up">
+        <Accordion>
+          {pricingFaqs.map((faq, index) => (
+            <AccordionItem title={faq.question} isOpen={index === 0}>
+              <p>{faq.answer}</p>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section section-red">
+    <div class="container text-center">
+      <div data-reveal="fade-up">
+        <p class="eyebrow text-cream">Ready to Begin?</p>
+        <h2 class="text-white mt-md">Let's Discuss Your Brand</h2>
+        <p class="lead text-cream mt-lg mx-auto" style="max-width: 600px; opacity: 0.9;">
+          Book a complimentary discovery call to discuss your needs and find the perfect package for your brand's journey.
+        </p>
+        <a href="/contact" class="btn btn-light mt-xl" data-transition-link>
+          Schedule Your Call
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Package Type Badge */
+  .package-type-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-full);
+    font-size: var(--text-small);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-xl);
+  }
+
+  .package-type-badge svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .foundation-badge {
+    background-color: var(--cream);
+    color: var(--deep-red);
+    border: 1px solid var(--cream-dark);
+  }
+
+  .retainer-badge {
+    background-color: var(--white);
+    color: var(--green);
+    border: 1px solid var(--cream-dark);
+  }
+
+  .retainer-badge svg {
+    color: var(--green);
+  }
+
+  /* Retainer Notice */
+  .retainer-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--green);
+    margin-bottom: var(--space-xl);
+    max-width: 700px;
+    margin-inline: auto;
+  }
+
+  .retainer-notice svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--green);
+    margin-top: 2px;
+  }
+
+  .retainer-notice p {
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--vintage-wine);
+  }
+
+  .retainer-notice strong {
+    color: var(--deep-red);
+  }
+
+  /* Foundation Packages Grid (2 columns) */
+  .foundation-packages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 768px) {
+    .foundation-packages {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Retainer Packages Grid (2 columns) */
+  .retainer-packages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 768px) {
+    .retainer-packages {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Choose Guide Section */
+  .choose-guide-grid {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .choose-guide-image img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .choose-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .choose-option {
+    padding: var(--space-lg);
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--green);
+  }
+
+  .choose-option h4 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h4);
+    font-weight: 600;
+    color: var(--deep-red);
+    margin-bottom: var(--space-xs);
+  }
+
+  .choose-option p {
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--vintage-wine);
+  }
+
+  .choose-option strong {
+    color: var(--deep-red);
+  }
+
+  @media (max-width: 1024px) {
+    .choose-guide-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .choose-guide-image {
+      order: -1;
+    }
+
+    .choose-guide-content {
+      text-align: center;
+    }
+
+    .choose-guide-content .divider {
+      margin-inline: auto;
+    }
+
+    .choose-option {
+      text-align: left;
+    }
+  }
+</style>

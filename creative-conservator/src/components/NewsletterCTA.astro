@@ -1,0 +1,49 @@
+---
+export interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}
+
+const {
+  eyebrow = 'Join the List',
+  title = "The Curator's Notes",
+  description = 'Insights on brand strategy, creative inspiration, and cultivating distinction.',
+} = Astro.props;
+---
+
+<section class="section section-red grain">
+  <div class="container">
+    <div class="newsletter-cta" data-reveal="scale-in">
+      <p class="eyebrow text-cream">{eyebrow}</p>
+      <h2 class="text-white">{title}</h2>
+      <div class="divider divider-center" style="background-color: var(--cream);"></div>
+      <p class="text-cream">{description}</p>
+
+      <form class="newsletter-form" data-newsletter-form>
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          aria-label="Email address"
+        />
+        <button type="submit" class="btn btn-light">Subscribe</button>
+      </form>
+
+      <p class="form-success text-cream mt-lg" data-form-success>
+        Thank you for subscribing!
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .form-success {
+    display: none;
+  }
+
+  .form-success.is-visible {
+    display: block;
+  }
+</style>

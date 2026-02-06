@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSplit from '../components/HeroSplit.astro';
+import Marquee from '../components/Marquee.astro';
+import DefinitionBlock from '../components/DefinitionBlock.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import PortfolioCard from '../components/PortfolioCard.astro';
+import ProcessTimeline from '../components/ProcessTimeline.astro';
+import TestimonialCarousel from '../components/TestimonialCarousel.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
+
+import { services } from '../data/services';
+import { portfolioProjects } from '../data/portfolio';
+import { siteInfo } from '../data/navigation';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MarketingAgency',
+    name: siteInfo.name,
+    description: siteInfo.tagline,
+    url: siteInfo.url,
+    email: 'Darya@creativeconservator.com',
+    founder: {
+      '@type': 'Person',
+      name: 'Darya',
+    },
+    serviceType: services.map((s) => s.title),
+    sameAs: ['https://instagram.com/creativeconservator'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteInfo.name,
+    url: siteInfo.url,
+  },
+];
+
+const featuredProjects = portfolioProjects.slice(0, 3);
+---
+
+<BaseLayout
+  title="The Creative Conservator | Creative Marketing Studio"
+  description="A modern creative marketing studio devoted to preserving the artistry at the heart of every brand. Content creation, brand strategy, and identity development."
+  structuredData={structuredData}
+  currentPath="/"
+>
+  <!-- Hero Section -->
+  <HeroSplit
+    eyebrow="Creative Marketing Studio"
+    title="CULTIVATING ARTISTRY. CRAFTING IDENTITY."
+    lead="A modern creative marketing studio devoted to preserving the artistry at the heart of every brand."
+    image="/images/hero/hero-creative-studio-1920.jpg"
+    imageAlt="Creative studio environment with elegant styling"
+    primaryCta={{ text: 'View Our Work', href: '/work' }}
+    secondaryCta={{ text: 'Get in Touch', href: '/contact' }}
+  />
+
+  <!-- Marquee Strip -->
+  <Marquee />
+
+  <!-- Brand Statement / About Intro -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="text-center" data-reveal="fade-up">
+        <p class="eyebrow">Who We Are</p>
+        <h2>Conserve</h2>
+        <div class="divider divider-center"></div>
+      </div>
+
+      <DefinitionBlock />
+
+      <div class="mt-xl" data-reveal="fade-up">
+        <p class="lead text-center">
+          The Creative Conservator is a modern creative marketing studio devoted to preserving the artistry at the heart of every brand. We blend intentional strategy with refined content creation—photography, videography, social media, and storytelling—to shape identities that feel timeless, compelling, and unmistakably distinct.
+        </p>
+      </div>
+
+      <!-- Decorative circle -->
+      <div class="decorative-circle" style="right: -10%; top: 20%; opacity: 0.03;" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="services-layout">
+        <div class="services-header" data-reveal="fade-up">
+          <SectionHeader
+            eyebrow="What We Do"
+            title="Our Services"
+            intro="Strategic, intentional creative work that protects brand coherence and supports lasting growth."
+          />
+          <a href="/services" class="link-arrow mt-lg" data-transition-link>
+            View All Services
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <div class="services-grid" data-reveal="stagger-up">
+          {services.map((service, index) => (
+            <div class:list={['service-grid-item', { 'offset-down': index === 1 || index === 3 }]}>
+              <ServiceCard service={service} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Work Section -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="featured-work-header" data-reveal="fade-up">
+        <SectionHeader
+          eyebrow="Portfolio"
+          title="Selected Work"
+          light={true}
+        />
+        <a href="/work" class="link-arrow text-cream" data-transition-link>
+          View All Work
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <div class="featured-work-grid">
+        {featuredProjects.map((project, index) => (
+          <div class:list={['featured-work-item', { 'featured-work-large': index === 0 }]}>
+            <PortfolioCard project={project} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <ProcessTimeline />
+
+  <!-- Testimonials Section -->
+  <TestimonialCarousel />
+
+  <!-- Newsletter CTA -->
+  <NewsletterCTA />
+
+  <!-- Contact CTA -->
+  <section class="section">
+    <div class="container-narrow text-center" data-reveal="fade-up">
+      <h2>Ready to Begin?</h2>
+      <div class="divider divider-center"></div>
+      <p class="lead">
+        Let's discuss how we can preserve and elevate your brand.
+      </p>
+      <a href="/contact" class="btn btn-primary mt-xl" data-transition-link>
+        Start a Project
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .services-layout {
+    display: grid;
+    grid-template-columns: 35% 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+
+  .services-header {
+    position: sticky;
+    top: 120px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .service-grid-item.offset-down {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    .services-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .services-header {
+      position: static;
+      text-align: center;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .service-grid-item.offset-down {
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .featured-work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .featured-work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .featured-work-large {
+    grid-row: span 2;
+  }
+
+  .featured-work-large :global(.portfolio-card-image) {
+    aspect-ratio: 3 / 4;
+  }
+
+  @media (max-width: 768px) {
+    .featured-work-header {
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .featured-work-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-work-large {
+      grid-row: auto;
+    }
+
+    .featured-work-large :global(.portfolio-card-image) {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

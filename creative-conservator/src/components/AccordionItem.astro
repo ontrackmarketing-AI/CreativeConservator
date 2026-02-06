@@ -1,0 +1,38 @@
+---
+export interface Props {
+  title: string;
+  isOpen?: boolean;
+  id?: string;
+}
+
+const { title, isOpen = false, id } = Astro.props;
+const itemId = id || `accordion-item-${Math.random().toString(36).substr(2, 9)}`;
+const contentId = `${itemId}-content`;
+---
+
+<div class:list={['accordion-item', { 'is-open': isOpen }]} data-accordion-item>
+  <button
+    class="accordion-trigger"
+    aria-expanded={isOpen ? 'true' : 'false'}
+    aria-controls={contentId}
+    data-accordion-trigger
+  >
+    <span>{title}</span>
+    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+  <div
+    class="accordion-content"
+    id={contentId}
+    role="region"
+    aria-labelledby={itemId}
+    data-accordion-content
+    style={isOpen ? '' : 'height: 0;'}
+  >
+    <div class="accordion-content-inner">
+      <slot />
+    </div>
+  </div>
+</div>

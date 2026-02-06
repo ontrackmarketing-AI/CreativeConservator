@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSplit from '../../components/HeroSplit.astro';
+import Accordion from '../../components/Accordion.astro';
+import AccordionItem from '../../components/AccordionItem.astro';
+import ProcessTimeline from '../../components/ProcessTimeline.astro';
+import { services } from '../../data/services';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.creativeconservator.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Services' },
+    ],
+  },
+  ...services.map((service) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.shortDescription,
+    provider: {
+      '@type': 'Organization',
+      name: 'The Creative Conservator',
+    },
+  })),
+];
+---
+
+<BaseLayout
+  title="Services | The Creative Conservator"
+  description="Strategic, intentional creative work that protects brand coherence. Explore our services including content creation, brand strategy, identity development, and marketing campaigns."
+  structuredData={structuredData}
+  currentPath="/services"
+>
+  <!-- Hero -->
+  <HeroSplit
+    eyebrow="What We Do"
+    title="Services Built on Strategy, Driven by Artistry"
+    lead="Strategic, intentional creative work that protects brand coherence and supports lasting growth."
+    image="/images/services/services-creative-process-1200.jpg"
+    imageAlt="Creative process and strategy session"
+    reversed={true}
+  />
+
+  <!-- Philosophy Intro -->
+  <section class="section">
+    <div class="container-narrow text-center" data-reveal="fade-up">
+      <p class="lead">
+        Every brand has a story worth protecting. Our services are designed to preserve the essence of your creative expression while shaping its evolution with intention. Through strategy and storytelling, we help experience-driven brands grow without losing who they are.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Accordion -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="services-accordion-layout">
+        <div class="services-sidebar" data-reveal="fade-up">
+          <p class="eyebrow">Our Expertise</p>
+          <h2>7 Services</h2>
+          <div class="divider"></div>
+          <p class="body-lg">
+            Each service is designed to preserve and elevate your brand with intention.
+          </p>
+          <p class="text-small mt-lg" style="opacity: 0.75;">
+            Not sure which service is right for you? Let's discuss your needs.
+          </p>
+          <a href="/contact" class="btn btn-primary mt-lg" data-transition-link>
+            Book a Consultation
+          </a>
+        </div>
+
+        <div class="services-accordion" data-reveal="fade-up">
+          <Accordion allowMultiple={true}>
+            {services.map((service, index) => (
+              <AccordionItem title={service.title} isOpen={index === 0}>
+                <p>{service.fullDescription}</p>
+
+                {service.included && service.included.length > 0 && (
+                  <>
+                    <h4 class="mt-lg mb-sm">What's Included:</h4>
+                    <ul>
+                      {service.included.map((item) => (
+                        <li><strong>{item.title}</strong> — {item.description}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {service.outcome && (
+                  <div class="accordion-outcome">
+                    <strong>Outcome:</strong>
+                    <p>{service.outcome}</p>
+                  </div>
+                )}
+
+                <a href={`/services/${service.slug}`} class="link-arrow mt-lg" data-transition-link>
+                  Learn More
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <ProcessTimeline />
+
+  <!-- CTA Section -->
+  <section class="section section-cream">
+    <div class="container-narrow text-center" data-reveal="fade-up">
+      <h2>Let's Create Together</h2>
+      <div class="divider divider-center"></div>
+      <p class="lead">
+        Ready to preserve and elevate your brand? Let's discuss your vision.
+      </p>
+      <a href="/contact" class="btn btn-primary mt-xl" data-transition-link>
+        Start a Project
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .services-accordion-layout {
+    display: grid;
+    grid-template-columns: 35% 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+
+  .services-sidebar {
+    position: sticky;
+    top: 120px;
+  }
+
+  @media (max-width: 1024px) {
+    .services-accordion-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .services-sidebar {
+      position: static;
+      text-align: center;
+    }
+
+    .services-sidebar .divider {
+      margin-inline: auto;
+    }
+  }
+</style>
