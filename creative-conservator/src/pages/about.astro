@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import DefinitionBlock from '../components/DefinitionBlock.astro';
-import { values, purpose, mission, founderBio, founderVision } from '../data/faqs';
+import { founderBio, founderVision } from '../data/faqs';
 
 const structuredData = [
   {
@@ -68,14 +68,13 @@ const structuredData = [
   <section class="section section-cream">
     <div class="container">
       <header class="section-header text-center" data-reveal="fade-up">
-        <p class="eyebrow">The Founder</p>
-        <h2>Vision Board</h2>
+        <h2>Our Purpose & Mission</h2>
         <div class="divider divider-center"></div>
       </header>
 
       <div class="vision-board" data-reveal="stagger-up">
-        {founderVision.map((item) => (
-          <div class="vision-card">
+        {founderVision.map((item, i) => (
+          <div class:list={['vision-card', { 'vision-card--wide': i === 0, 'vision-card--tall': i === 4 }]}>
             <h3>{item.title}</h3>
             {item.body && <p>{item.body}</p>}
             {item.beliefs && (
@@ -85,44 +84,6 @@ const structuredData = [
                 ))}
               </ul>
             )}
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Purpose & Mission -->
-  <section class="section section-cream">
-    <div class="container">
-      <div class="purpose-mission-grid" data-reveal="stagger-up">
-        <div class="purpose-card">
-          <h2>Purpose</h2>
-          <div class="divider"></div>
-          <p>{purpose}</p>
-        </div>
-        <div class="purpose-card mission">
-          <h2>Mission</h2>
-          <div class="divider" style="background-color: var(--green);"></div>
-          <p>{mission}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Values -->
-  <section class="section">
-    <div class="container">
-      <header class="section-header text-center" data-reveal="fade-up">
-        <p class="eyebrow">What Guides Us</p>
-        <h2>Our Values</h2>
-        <div class="divider divider-center"></div>
-      </header>
-
-      <div class="values-grid" data-reveal="stagger-up">
-        {values.map((value) => (
-          <div class="value-card">
-            <h3>{value.title}</h3>
-            <p>{value.description}</p>
           </div>
         ))}
       </div>
@@ -204,10 +165,24 @@ const structuredData = [
     padding-left: var(--space-xl);
   }
 
+  /* ---- Bento grid ---- */
   .vision-board {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
+    grid-template-columns: 3fr 2fr;
+    grid-auto-rows: auto;
+    gap: var(--space-lg);
+  }
+
+  /* Row 1: "Our Vision" spans full width */
+  .vision-card--wide {
+    grid-column: 1 / -1;
+  }
+
+  /* Row 2: "Why We Exist" (3fr) | "Our Approach" (2fr) — default flow */
+
+  /* Row 3: "Who We Partner With" (3fr) | "What We Believe" (2fr) spans 2 rows */
+  .vision-card--tall {
+    grid-row: span 2;
   }
 
   .vision-card {
@@ -216,6 +191,16 @@ const structuredData = [
     border-left: 4px solid var(--green);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .vision-card--wide {
+    text-align: center;
+    border-left: none;
+    border-bottom: 4px solid var(--green);
+    padding: var(--space-2xl) var(--space-xl);
   }
 
   .vision-card h3 {
@@ -228,6 +213,11 @@ const structuredData = [
     color: var(--vintage-wine);
     font-size: var(--text-body);
     line-height: var(--leading-relaxed);
+  }
+
+  .vision-card--wide p {
+    max-width: 52ch;
+    margin-inline: auto;
   }
 
   .vision-beliefs {
@@ -261,6 +251,21 @@ const structuredData = [
   @media (max-width: 768px) {
     .vision-board {
       grid-template-columns: 1fr;
+    }
+
+    .vision-card--wide {
+      border-left: 4px solid var(--green);
+      border-bottom: none;
+      text-align: left;
+      padding: var(--space-xl);
+    }
+
+    .vision-card--wide p {
+      margin-inline: 0;
+    }
+
+    .vision-card--tall {
+      grid-row: span 1;
     }
 
     .founder-grid {

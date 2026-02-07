@@ -8,6 +8,7 @@ import ServiceCard from '../components/ServiceCard.astro';
 import PortfolioCard from '../components/PortfolioCard.astro';
 import ProcessTimeline from '../components/ProcessTimeline.astro';
 import TestimonialCarousel from '../components/TestimonialCarousel.astro';
+import CaseStudySection from '../components/CaseStudySection.astro';
 import NewsletterCTA from '../components/NewsletterCTA.astro';
 
 import { services } from '../data/services';
@@ -59,6 +60,9 @@ const featuredProjects = portfolioProjects.slice(0, 3);
 
   <!-- Marquee Strip -->
   <Marquee />
+
+  <!-- Case Studies -->
+  <CaseStudySection />
 
   <!-- Brand Statement / About Intro -->
   <section class="section">

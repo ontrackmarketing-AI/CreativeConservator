@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { stopLenis, startLenis } from './animations';
 
 /**
  * Initialize mobile menu functionality
@@ -9,39 +10,41 @@ function initMobileMenu(): void {
 
   if (!toggle || !nav) return;
 
-  toggle.addEventListener('click', () => {
-    const isOpen = toggle.classList.contains('is-open');
+  function openMenu() {
+    toggle!.classList.add('is-open');
+    toggle!.setAttribute('aria-expanded', 'true');
+    nav!.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    stopLenis();
+  }
 
-    if (isOpen) {
-      toggle.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
+  function closeMenu() {
+    toggle!.classList.remove('is-open');
+    toggle!.setAttribute('aria-expanded', 'false');
+    nav!.classList.remove('is-open');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    startLenis();
+  }
+
+  toggle.addEventListener('click', () => {
+    if (toggle.classList.contains('is-open')) {
+      closeMenu();
     } else {
-      toggle.classList.add('is-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      nav.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
+      openMenu();
     }
   });
 
   // Close menu on nav link click
   nav.querySelectorAll('.nav-link').forEach((link) => {
-    link.addEventListener('click', () => {
-      toggle.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', () => closeMenu());
   });
 
   // Close menu on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && toggle.classList.contains('is-open')) {
-      toggle.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
+      closeMenu();
     }
   });
 }

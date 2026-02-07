@@ -53,16 +53,6 @@ export const values = [
     title: 'Respect for Integrity',
     description: 'We treat brand identity as something to be protected, maintaining its integrity through consistency, long-term thinking, and the refusal of misaligned initiatives.',
   },
-  {
-    id: 'value-4',
-    title: 'Evolution',
-    description: 'Brands should evolve with intention, adapting and modernizing without compromising their core identity. Growth is guided by strategy, protecting what works while refining what does not.',
-  },
-  {
-    id: 'value-5',
-    title: 'Partnership',
-    description: 'We work collaboratively and strategically with our clients. Our role extends beyond delivery, encompassing clear guidance, direct feedback, and shared accountability for results.',
-  },
 ];
 
 export const brandDefinition = {

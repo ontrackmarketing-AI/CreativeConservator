@@ -1,0 +1,165 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { caseStudies } from '../data/caseStudies';
+---
+
+<section class="section section-cream">
+  <div class="container">
+    <SectionHeader
+      eyebrow="Case Studies"
+      title="Proof in Practice"
+      align="center"
+    />
+
+    <div class="case-studies">
+      {caseStudies.map((study, index) => {
+        const reversed = index % 2 !== 0;
+        return (
+          <div class:list={['case-study-row', { reversed }]}>
+            <div
+              class="case-study-image duotone"
+              data-reveal={reversed ? 'fade-left' : 'fade-right'}
+            >
+              <img
+                src={study.image}
+                alt={study.imageAlt}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            <div
+              class="case-study-text"
+              data-reveal={reversed ? 'fade-right' : 'fade-left'}
+            >
+              <span class="case-study-tag">{study.industry}</span>
+              <h3>{study.client}</h3>
+              <p>{study.headline}</p>
+              <ul class="case-study-results">
+                {study.results.map((result) => (
+                  <li>{result}</li>
+                ))}
+              </ul>
+              <a href={`/case-studies/${study.slug}`} class="link-arrow" data-transition-link>
+                View Case Study
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .case-studies {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4xl);
+    margin-top: var(--space-3xl);
+  }
+
+  .case-study-row {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .case-study-row.reversed .case-study-image {
+    order: 2;
+  }
+
+  .case-study-row.reversed .case-study-text {
+    order: 1;
+  }
+
+  .case-study-image {
+    aspect-ratio: 4 / 5;
+    max-width: 360px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .case-study-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .case-study-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: var(--text-eyebrow);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: var(--space-sm);
+  }
+
+  .case-study-text h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    color: var(--deep-red);
+    margin-bottom: var(--space-sm);
+  }
+
+  .case-study-text p {
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+    color: var(--vintage-wine);
+    margin-bottom: var(--space-lg);
+  }
+
+  .case-study-results {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-xl) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .case-study-results li {
+    position: relative;
+    padding-left: var(--space-lg);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--vintage-wine);
+  }
+
+  .case-study-results li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--green);
+  }
+
+  @media (max-width: 768px) {
+    .case-study-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .case-study-row.reversed .case-study-image {
+      order: 0;
+    }
+
+    .case-study-row.reversed .case-study-text {
+      order: 0;
+    }
+
+    .case-study-image {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

@@ -399,6 +399,10 @@ function initProcessLine(): void {
  * Main initialization function
  */
 export function initAnimations(): void {
+  // Signal that GSAP is loaded — CSS hides [data-reveal] elements
+  // only when this class is present (progressive enhancement).
+  document.documentElement.classList.add('gsap-ready');
+
   // Initialize Lenis first
   initLenis();
 
@@ -416,6 +420,16 @@ export function initAnimations(): void {
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });
+}
+
+/** Stop Lenis smooth scroll (e.g. when mobile menu opens) */
+export function stopLenis(): void {
+  lenis?.stop();
+}
+
+/** Resume Lenis smooth scroll (e.g. when mobile menu closes) */
+export function startLenis(): void {
+  lenis?.start();
 }
 
 // Export individual functions for selective use

@@ -50,7 +50,7 @@ const {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Caslon+Display&display=swap" rel="stylesheet" />
 
   <!-- SEO Component -->
   <SEO
@@ -63,6 +63,18 @@ const {
     noindex={noindex}
     structuredData={structuredData}
   />
+
+  <!-- No-JS fallback: make page visible if JavaScript fails to load -->
+  <noscript>
+    <style>
+      body.is-loading { opacity: 1 !important; }
+      [data-reveal], [data-reveal] > * {
+        opacity: 1 !important;
+        transform: none !important;
+        clip-path: none !important;
+      }
+    </style>
+  </noscript>
 </head>
 <body class="is-loading">
   <!-- Scroll Progress Bar -->

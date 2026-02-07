@@ -1,0 +1,1051 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { caseStudies, getNextCaseStudy } from '../../data/caseStudies';
+import { getServiceBySlug } from '../../data/services';
+
+export function getStaticPaths() {
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+const { study } = Astro.props;
+const currentIndex = caseStudies.findIndex(cs => cs.slug === study.slug);
+const nextStudy = caseStudies[(currentIndex + 1) % caseStudies.length];
+const prevStudy = caseStudies[(currentIndex - 1 + caseStudies.length) % caseStudies.length];
+const challengeParagraphs = study.challenge.split('\n\n');
+const solutionParagraphs = study.solution.split('\n\n');
+const studyServices = study.servicesUsed.map(slug => getServiceBySlug(slug)).filter(Boolean);
+
+const chapters = [
+  { num: '01', label: 'Challenge', href: '#chapter-01' },
+  { num: '02', label: 'Solution', href: '#chapter-02' },
+  { num: '03', label: 'The Work', href: '#chapter-03' },
+  { num: '04', label: 'Impact', href: '#chapter-04' },
+  { num: '05', label: 'Client Words', href: '#chapter-05' },
+];
+---
+
+<BaseLayout
+  title={`${study.client} — Case Study | The Creative Conservator`}
+  description={study.headline}
+  ogImage={study.heroImage}
+  currentPath={`/case-studies/${study.slug}`}
+>
+
+  <!-- ============================== -->
+  <!-- 1. CINEMATIC HERO — Full 100vh -->
+  <!-- ============================== -->
+  <section class="cinematic-hero">
+    <div class="cinematic-hero__bg">
+      <img src={study.heroImage} alt={study.heroImageAlt} loading="eager" />
+    </div>
+    <div class="cinematic-hero__overlay"></div>
+    <div class="cinematic-hero__content">
+      <span class="eyebrow cinematic-hero__industry">{study.industry}</span>
+      <h1 class="display cinematic-hero__client">{study.client}</h1>
+      <div class="cinematic-hero__tags">
+        {studyServices.map((service) => (
+          <span class="cinematic-hero__tag">{service!.title}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- 2. INFO STRIP                  -->
+  <!-- ============================== -->
+  <section class="info-strip">
+    <div class="container info-strip__inner">
+      {study.clientLogo && (
+        <span class="info-strip__item info-strip__logo-item">
+          <img src={study.clientLogo} alt={`${study.client} logo`} class="info-strip__logo" />
+        </span>
+      )}
+      <span class="info-strip__item">
+        <span class="info-strip__label">Case Study</span>
+      </span>
+      <span class="info-strip__item">
+        <span class="info-strip__value">{study.client}</span>
+      </span>
+      {study.year && (
+        <span class="info-strip__item">
+          <span class="info-strip__value">{study.year}</span>
+        </span>
+      )}
+      {study.timeline && (
+        <span class="info-strip__item">
+          <span class="info-strip__value">{study.timeline}</span>
+        </span>
+      )}
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- 3. CH.01 — CHALLENGE           -->
+  <!-- ============================== -->
+  <section id="chapter-01" class="section chapter-section chapter-section--white">
+    <div class="container chapter-grid">
+      <aside class="chapter-sidebar">
+        <nav class="chapter-nav">
+          {chapters.map((ch) => (
+            <a
+              href={ch.href}
+              class={`chapter-nav__link ${ch.num === '01' ? 'is-active' : ''}`}
+              data-chapter={ch.num}
+            >
+              <span class="chapter-nav__num">{ch.num}</span>
+              <span class="chapter-nav__label">{ch.label}</span>
+            </a>
+          ))}
+        </nav>
+      </aside>
+      <div class="chapter-content">
+        <span class="chapter-number">01</span>
+        <span class="eyebrow">Chapter One</span>
+        <h2 class="h2 chapter-content__heading">The Challenge</h2>
+        {challengeParagraphs.map((paragraph) => (
+          <p class="body-lg chapter-content__paragraph">{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- 4. CH.02 — SOLUTION            -->
+  <!-- ============================== -->
+  <section id="chapter-02" class="section chapter-section section-cream">
+    <div class="container chapter-grid">
+      <aside class="chapter-sidebar">
+        <nav class="chapter-nav">
+          {chapters.map((ch) => (
+            <a
+              href={ch.href}
+              class={`chapter-nav__link ${ch.num === '02' ? 'is-active' : ''}`}
+              data-chapter={ch.num}
+            >
+              <span class="chapter-nav__num">{ch.num}</span>
+              <span class="chapter-nav__label">{ch.label}</span>
+            </a>
+          ))}
+        </nav>
+      </aside>
+      <div class="chapter-content">
+        <span class="chapter-number">02</span>
+        <span class="eyebrow">Chapter Two</span>
+        <h2 class="h2 chapter-content__heading">The Solution</h2>
+        {solutionParagraphs.map((paragraph) => (
+          <p class="body-lg chapter-content__paragraph">{paragraph}</p>
+        ))}
+        {study.approach.length > 0 && (
+          <div class="approach-list">
+            {study.approach.map((item, i) => (
+              <div class="approach-card">
+                <span class="approach-card__num">{String(i + 1).padStart(2, '0')}</span>
+                <p class="approach-card__text">{item}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- 5. CH.03 — THE WORK            -->
+  <!-- ============================== -->
+  <section id="chapter-03" class="section chapter-section chapter-section--white">
+    <div class="container chapter-grid">
+      <aside class="chapter-sidebar">
+        <nav class="chapter-nav">
+          {chapters.map((ch) => (
+            <a
+              href={ch.href}
+              class={`chapter-nav__link ${ch.num === '03' ? 'is-active' : ''}`}
+              data-chapter={ch.num}
+            >
+              <span class="chapter-nav__num">{ch.num}</span>
+              <span class="chapter-nav__label">{ch.label}</span>
+            </a>
+          ))}
+        </nav>
+      </aside>
+      <div class="chapter-content">
+        <span class="chapter-number">03</span>
+        <span class="eyebrow">Chapter Three</span>
+        <h2 class="h2 chapter-content__heading">The Work</h2>
+
+        <div class="work-gallery">
+          {study.gallery.slice(0, 4).map((item) => (
+            <div class="work-gallery__item">
+              <img src={item.src} alt={item.alt} loading="lazy" />
+            </div>
+          ))}
+        </div>
+
+        <div class="work-services">
+          <h3 class="h4 work-services__heading">Services</h3>
+          <ul class="work-services__list">
+            {studyServices.map((service) => (
+              <li class="work-services__item">
+                <svg class="work-services__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>{service!.title}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- 6. CH.04 — IMPACT              -->
+  <!-- ============================== -->
+  <section id="chapter-04" class="section section-dark impact-section">
+    <div class="impact-grain"></div>
+    <div class="container impact-content">
+      <div class="impact-header">
+        <span class="eyebrow impact-eyebrow">Chapter Four</span>
+        <h2 class="h2 impact-heading">The Impact</h2>
+      </div>
+      <div class="impact-metrics">
+        {study.metrics.map((metric) => (
+          <div class="impact-metric">
+            <span class="display-sm impact-metric__value">{metric.value}</span>
+            <span class="eyebrow impact-metric__label">{metric.label}</span>
+          </div>
+        ))}
+      </div>
+      {study.results.length > 0 && (
+        <div class="impact-results">
+          {study.results.map((result) => (
+            <div class="impact-result">
+              <span class="impact-result__dot"></span>
+              <p class="impact-result__text">{result}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- 7. CH.05 — CLIENT WORDS        -->
+  <!-- ============================== -->
+  {study.testimonial && (
+    <section id="chapter-05" class="section section-cream testimonial-chapter">
+      <div class="testimonial-grain"></div>
+      <div class="container-narrow testimonial-chapter__inner">
+        <span class="eyebrow">Chapter Five</span>
+        <h2 class="h2 testimonial-chapter__heading">In Their Words</h2>
+        <div class="testimonial-chapter__block">
+          <span class="testimonial-chapter__quote-mark">&ldquo;</span>
+          <blockquote class="testimonial-chapter__quote">
+            {study.testimonial.quote}
+          </blockquote>
+        </div>
+        <div class="testimonial-chapter__author">
+          <span class="testimonial-chapter__author-name">{study.testimonial.authorName}</span>
+          <span class="testimonial-chapter__author-title">{study.testimonial.authorTitle}</span>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ============================== -->
+  <!-- 8. CASE STUDY NAV              -->
+  <!-- ============================== -->
+  <section class="section case-nav-section">
+    <div class="container">
+      <div class="case-nav-grid">
+        <a href={`/case-studies/${prevStudy.slug}`} class="case-nav-card">
+          <div class="case-nav-card__thumb">
+            <img src={prevStudy.heroImage} alt={prevStudy.heroImageAlt} loading="lazy" />
+          </div>
+          <div class="case-nav-card__text">
+            <span class="eyebrow case-nav-card__eyebrow">Previous</span>
+            <h4 class="case-nav-card__client">{prevStudy.client}</h4>
+            <p class="text-small case-nav-card__headline">{prevStudy.headline}</p>
+          </div>
+        </a>
+        <a href={`/case-studies/${nextStudy.slug}`} class="case-nav-card case-nav-card--next">
+          <div class="case-nav-card__thumb">
+            <img src={nextStudy.heroImage} alt={nextStudy.heroImageAlt} loading="lazy" />
+          </div>
+          <div class="case-nav-card__text">
+            <span class="eyebrow case-nav-card__eyebrow">Next</span>
+            <h4 class="case-nav-card__client">{nextStudy.client}</h4>
+            <p class="text-small case-nav-card__headline">{nextStudy.headline}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== -->
+  <!-- 9. CTA                         -->
+  <!-- ============================== -->
+  <section class="section cta-section">
+    <div class="container-narrow cta-section__inner">
+      <span class="eyebrow">What's Next</span>
+      <h2 class="h2 cta-section__heading">Ready to Write Your Chapter?</h2>
+      <p class="lead cta-section__lead">Every great brand has a story worth telling. Let us help you craft yours with intention, artistry, and strategy that lasts.</p>
+      <a href="/contact" class="btn btn-primary cta-section__btn">Start the Conversation</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ==========================================================================
+     V3 CINEMATIC HERO + INFO STRIP (preserved)
+     ========================================================================== */
+
+  /* ---------- 1. CINEMATIC HERO ---------- */
+  .cinematic-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .cinematic-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .cinematic-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cinematic-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(34, 21, 22, 0.7) 0%,
+      rgba(34, 21, 22, 0.3) 40%,
+      transparent 100%
+    );
+  }
+
+  .cinematic-hero__content {
+    position: absolute;
+    bottom: 3rem;
+    left: var(--space-lg);
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .cinematic-hero__industry {
+    display: block;
+    color: var(--green);
+    margin-bottom: var(--space-sm);
+  }
+
+  .cinematic-hero__client {
+    color: var(--cream);
+    margin-bottom: var(--space-lg);
+  }
+
+  .cinematic-hero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .cinematic-hero__tag {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    border: 1px solid rgba(245, 240, 232, 0.35);
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(245, 240, 232, 0.08);
+  }
+
+  @media (max-width: 768px) {
+    .cinematic-hero__content {
+      bottom: 2rem;
+      left: var(--space-md);
+      right: var(--space-md);
+    }
+  }
+
+  /* ---------- 2. INFO STRIP ---------- */
+  .info-strip {
+    background-color: var(--white);
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .info-strip__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+
+  .info-strip__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    position: relative;
+  }
+
+  .info-strip__item + .info-strip__item::before {
+    content: '';
+    position: absolute;
+    left: calc(-0.5 * var(--space-lg));
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 1.25rem;
+    background-color: var(--cream-dark);
+  }
+
+  .info-strip__label {
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .info-strip__value {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--vintage-wine);
+  }
+
+  .info-strip__logo-item {
+    padding: 0;
+  }
+
+  .info-strip__logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 640px) {
+    .info-strip__inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-md);
+    }
+
+    .info-strip__item + .info-strip__item::before {
+      display: none;
+    }
+  }
+
+  /* ==========================================================================
+     V5 CHAPTER-BASED LAYOUT
+     ========================================================================== */
+
+  /* ---------- Chapter Grid (sidebar + content) ---------- */
+  .chapter-section--white {
+    background-color: var(--white);
+  }
+
+  .chapter-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+
+  /* ---------- Chapter Sidebar Nav ---------- */
+  .chapter-sidebar {
+    position: sticky;
+    top: 120px;
+  }
+
+  .chapter-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .chapter-nav__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--vintage-wine);
+    border-left: 3px solid transparent;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+  }
+
+  .chapter-nav__link:hover {
+    background-color: var(--green-light);
+  }
+
+  .chapter-nav__link.is-active {
+    color: var(--green);
+    border-left-color: var(--green);
+    font-weight: 600;
+  }
+
+  .chapter-nav__num {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.5;
+  }
+
+  .chapter-nav__link.is-active .chapter-nav__num {
+    opacity: 1;
+  }
+
+  /* ---------- Chapter Content ---------- */
+  .chapter-content {
+    max-width: 800px;
+  }
+
+  .chapter-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1;
+    -webkit-text-stroke: 1.5px var(--deep-red);
+    color: transparent;
+    opacity: 0.15;
+    margin-bottom: var(--space-md);
+    user-select: none;
+  }
+
+  .chapter-content__heading {
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .chapter-content__paragraph {
+    color: var(--vintage-wine);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
+  }
+
+  .chapter-content__paragraph:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ---------- Approach Cards (Ch. 02) ---------- */
+  .approach-list {
+    margin-top: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .approach-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
+    border-bottom: 1px solid rgba(59, 5, 16, 0.08);
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .approach-card:first-child {
+    border-top: 1px solid rgba(59, 5, 16, 0.08);
+  }
+
+  .approach-card:hover {
+    background-color: var(--green-light);
+  }
+
+  .approach-card__num {
+    font-family: var(--font-heading);
+    font-size: var(--text-h4);
+    font-weight: 600;
+    color: var(--green);
+    flex-shrink: 0;
+    min-width: 2rem;
+  }
+
+  .approach-card__text {
+    font-size: var(--text-body);
+    color: var(--vintage-wine);
+    line-height: 1.7;
+  }
+
+  /* ---------- Work Gallery (Ch. 03) ---------- */
+  .work-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .work-gallery__item {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+
+  .work-gallery__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .work-gallery__item:hover img {
+    transform: scale(1.03);
+  }
+
+  /* ---------- Services List (Ch. 03) ---------- */
+  .work-services__heading {
+    margin-bottom: var(--space-lg);
+    color: var(--deep-red);
+  }
+
+  .work-services__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .work-services__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-body);
+    color: var(--vintage-wine);
+  }
+
+  .work-services__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--green);
+  }
+
+  /* ---------- Impact Section (Ch. 04) ---------- */
+  .impact-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .impact-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    z-index: 1;
+  }
+
+  .impact-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .impact-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .impact-eyebrow {
+    color: var(--green);
+    display: block;
+    margin-bottom: var(--space-md);
+  }
+
+  .impact-heading {
+    color: var(--cream);
+  }
+
+  .impact-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .impact-metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  .impact-metric__value {
+    font-family: var(--font-heading);
+    -webkit-text-stroke: 1.5px var(--cream);
+    color: transparent;
+  }
+
+  .impact-metric__label {
+    color: var(--green);
+  }
+
+  .impact-results {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .impact-result {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .impact-result__dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--green);
+    margin-top: 0.55em;
+  }
+
+  .impact-result__text {
+    color: var(--cream);
+    line-height: 1.7;
+    font-size: var(--text-body);
+  }
+
+  /* ---------- Testimonial Chapter (Ch. 05) ---------- */
+  .testimonial-chapter {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    z-index: 1;
+  }
+
+  .testimonial-chapter__inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .testimonial-chapter__heading {
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .testimonial-chapter__block {
+    position: relative;
+    border-left: 4px solid var(--green);
+    padding-left: var(--space-xl);
+    text-align: left;
+  }
+
+  .testimonial-chapter__quote-mark {
+    position: absolute;
+    top: -0.75rem;
+    left: var(--space-md);
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--green);
+    opacity: 0.2;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .testimonial-chapter__quote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--vintage-wine);
+  }
+
+  .testimonial-chapter__author {
+    margin-top: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .testimonial-chapter__author-name {
+    font-family: var(--font-body);
+    font-size: var(--text-eyebrow);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .testimonial-chapter__author-title {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    color: var(--vintage-wine);
+    opacity: 0.7;
+  }
+
+  /* ---------- Case Study Nav ---------- */
+  .case-nav-section {
+    background-color: var(--white);
+  }
+
+  .case-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .case-nav-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    border: 1px solid rgba(59, 5, 16, 0.06);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background-color var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .case-nav-card:hover {
+    background-color: var(--cream);
+    box-shadow: var(--shadow-md);
+  }
+
+  .case-nav-card__thumb {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .case-nav-card__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .case-nav-card__text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .case-nav-card__eyebrow {
+    font-size: var(--text-caption);
+  }
+
+  .case-nav-card__client {
+    font-size: var(--text-h4);
+    color: var(--deep-red);
+    line-height: 1.3;
+  }
+
+  .case-nav-card__headline {
+    color: var(--vintage-wine);
+    opacity: 0.7;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .case-nav-card--next {
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+
+  .case-nav-card--next .case-nav-card__text {
+    align-items: flex-end;
+  }
+
+  /* ---------- CTA Section ---------- */
+  .cta-section {
+    background-color: var(--white);
+  }
+
+  .cta-section__inner {
+    text-align: center;
+  }
+
+  .cta-section__heading {
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .cta-section__lead {
+    margin-bottom: var(--space-2xl);
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .cta-section__btn {
+    display: inline-flex;
+  }
+
+  /* ==========================================================================
+     RESPONSIVE — 768px
+     ========================================================================== */
+  @media (max-width: 768px) {
+    /* Sidebar becomes horizontal sticky pill bar */
+    .chapter-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .chapter-sidebar {
+      position: sticky;
+      top: 60px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-full);
+      padding: var(--space-xs) var(--space-sm);
+      margin-inline: calc(-1 * var(--space-lg));
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-cream .chapter-sidebar {
+      background: rgba(245, 240, 232, 0.85);
+    }
+
+    .chapter-nav {
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .chapter-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chapter-nav__link {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--text-caption);
+    }
+
+    .chapter-nav__link.is-active {
+      border-left-color: transparent;
+      border-bottom-color: var(--green);
+    }
+
+    .chapter-number {
+      font-size: 4rem;
+    }
+
+    /* Gallery stays 2 columns */
+    .work-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Impact metrics 2 columns */
+    .impact-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Results single column */
+    .impact-results {
+      grid-template-columns: 1fr;
+    }
+
+    /* Case nav single column */
+    .case-nav-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .case-nav-card--next {
+      flex-direction: row;
+      text-align: left;
+    }
+
+    .case-nav-card--next .case-nav-card__text {
+      align-items: flex-start;
+    }
+  }
+
+  /* ---------- 480px breakpoints ---------- */
+  @media (max-width: 480px) {
+    .work-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .impact-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('[id^="chapter-"]');
+    const navLinks = document.querySelectorAll('.chapter-nav__link');
+
+    if (sections.length === 0 || navLinks.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const chapterNum = entry.target.id.replace('chapter-', '');
+
+            navLinks.forEach((link) => {
+              const linkChapter = link.getAttribute('data-chapter');
+              if (linkChapter === chapterNum) {
+                link.classList.add('is-active');
+              } else {
+                link.classList.remove('is-active');
+              }
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '-20% 0px -60% 0px',
+      }
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script>

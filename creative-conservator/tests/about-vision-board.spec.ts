@@ -45,22 +45,37 @@ test.describe('About page — Founder Vision Board', () => {
     await expect(beliefs.first()).toContainText('Trust is built before conversion');
   });
 
-  test('cards have green left border', async ({ page }) => {
-    const firstCard = page.locator('.vision-card').first();
-    const borderLeft = await firstCard.evaluate(el =>
-      window.getComputedStyle(el).borderLeftStyle
+  test('"Our Vision" card spans full width (bento wide)', async ({ page }) => {
+    const wideCard = page.locator('.vision-card--wide');
+    await expect(wideCard).toHaveCount(1);
+    await expect(wideCard.locator('h3')).toHaveText('Our Vision');
+
+    const grid = page.locator('.vision-board');
+    const gridColumns = await grid.evaluate(el =>
+      window.getComputedStyle(el).gridTemplateColumns
     );
-    expect(borderLeft).toBe('solid');
+    const cardCol = await wideCard.evaluate(el =>
+      window.getComputedStyle(el).gridColumn
+    );
+    // Should span from column 1 to the end
+    expect(cardCol).toBe('1 / -1');
   });
 
-  test('2-column grid on desktop', async ({ page }) => {
+  test('"What We Believe" card is tall (bento tall)', async ({ page }) => {
+    const tallCard = page.locator('.vision-card--tall');
+    await expect(tallCard).toHaveCount(1);
+    await expect(tallCard.locator('h3')).toHaveText('What We Believe');
+  });
+
+  test('bento grid uses uneven columns on desktop', async ({ page }) => {
     const grid = page.locator('.vision-board');
     const columns = await grid.evaluate(el =>
       window.getComputedStyle(el).gridTemplateColumns
     );
-    // Should have 2 column values (e.g., "400px 400px")
-    const colCount = columns.split(' ').length;
-    expect(colCount).toBe(2);
+    // 3fr 2fr produces two unequal pixel values (e.g. "600.5px 400.33px")
+    const colWidths = columns.split(' ').map(parseFloat);
+    expect(colWidths).toHaveLength(2);
+    expect(colWidths[0]).toBeGreaterThan(colWidths[1]);
   });
 
   test('single column on mobile', async ({ page }) => {

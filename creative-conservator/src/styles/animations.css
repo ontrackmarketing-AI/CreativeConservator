@@ -31,51 +31,52 @@
 }
 
 /* ---------- Scroll Reveal Initial States ---------- */
-/* Elements with data-reveal are invisible until GSAP triggers them */
-[data-reveal] {
+/* Elements are only hidden when .gsap-ready is on <html>, ensuring
+   content stays visible if JS fails to load (progressive enhancement). */
+.gsap-ready [data-reveal] {
   will-change: transform, opacity;
 }
 
-[data-reveal="fade-up"] {
+.gsap-ready [data-reveal="fade-up"] {
   opacity: 0;
   transform: translateY(40px);
 }
 
-[data-reveal="fade-left"] {
+.gsap-ready [data-reveal="fade-left"] {
   opacity: 0;
   transform: translateX(-60px);
 }
 
-[data-reveal="fade-right"] {
+.gsap-ready [data-reveal="fade-right"] {
   opacity: 0;
   transform: translateX(60px);
 }
 
-[data-reveal="stagger-up"] > * {
+.gsap-ready [data-reveal="stagger-up"] > * {
   opacity: 0;
   transform: translateY(40px);
 }
 
-[data-reveal="clip-up"] {
+.gsap-ready [data-reveal="clip-up"] {
   clip-path: inset(100% 0 0 0);
 }
 
-[data-reveal="split-lines"] {
+.gsap-ready [data-reveal="split-lines"] {
   overflow: hidden;
 }
 
-[data-reveal="split-lines"] .line {
+.gsap-ready [data-reveal="split-lines"] .line {
   transform: translateY(100%);
   display: block;
 }
 
-[data-reveal="scale-in"] {
+.gsap-ready [data-reveal="scale-in"] {
   opacity: 0;
   transform: scale(0.9);
 }
 
 /* Once revealed, remove will-change for performance */
-[data-reveal].revealed {
+.gsap-ready [data-reveal].revealed {
   will-change: auto;
 }
 
@@ -176,8 +177,8 @@
 
 /* ---------- Reduced Motion Override ---------- */
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal],
-  [data-reveal] > * {
+  .gsap-ready [data-reveal],
+  .gsap-ready [data-reveal] > * {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;

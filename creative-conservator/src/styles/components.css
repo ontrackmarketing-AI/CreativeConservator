@@ -9,7 +9,8 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  padding-block: var(--space-md);
+  padding-block: 0.5rem;
+  background: rgba(136, 144, 99, 0.45);
   transition: background var(--duration-base) var(--ease-out),
               padding var(--duration-base) var(--ease-out);
 }
@@ -31,7 +32,7 @@
 .logo {
   font-family: var(--font-heading);
   font-size: 1.375rem;
-  font-weight: 600;
+  font-weight: 800;
   color: var(--deep-red);
   letter-spacing: -0.01em;
   text-decoration: none;
@@ -49,9 +50,14 @@
   font-size: var(--text-nav);
   font-weight: 500;
   letter-spacing: 0.05em;
-  color: var(--vintage-wine);
+  color: var(--white);
   text-decoration: none;
   position: relative;
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.header.is-scrolled .nav-desktop .nav-link {
+  color: var(--vintage-wine);
 }
 
 .nav-desktop .nav-link::after {
@@ -61,10 +67,15 @@
   left: 0;
   right: 0;
   height: 1.5px;
-  background-color: var(--deep-red);
+  background-color: var(--white);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--duration-base) var(--ease-out);
+  transition: transform var(--duration-base) var(--ease-out),
+              background-color var(--duration-base) var(--ease-out);
+}
+
+.header.is-scrolled .nav-desktop .nav-link::after {
+  background-color: var(--deep-red);
 }
 
 .nav-desktop .nav-link:hover::after,
@@ -85,9 +96,14 @@
   display: block;
   width: 24px;
   height: 2px;
-  background-color: var(--deep-red);
+  background-color: var(--white);
   transition: transform var(--duration-base) var(--ease-out),
-              opacity var(--duration-fast) var(--ease-out);
+              opacity var(--duration-fast) var(--ease-out),
+              background-color var(--duration-base) var(--ease-out);
+}
+
+.header.is-scrolled .mobile-menu-toggle span {
+  background-color: var(--deep-red);
 }
 
 .mobile-menu-toggle.is-open span:nth-child(1) {
@@ -108,13 +124,15 @@
   position: fixed;
   inset: 0;
   background-color: var(--cream);
-  z-index: 999;
+  z-index: 1002;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--duration-base) var(--ease-out);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .nav-mobile.is-open {
@@ -236,7 +254,7 @@
 /* ---------- Marquee ---------- */
 .marquee {
   overflow: hidden;
-  padding-block: var(--space-xl);
+  padding-block: var(--space-md);
   border-top: 1px solid var(--cream-dark);
   border-bottom: 1px solid var(--cream-dark);
 }
@@ -255,7 +273,7 @@
   align-items: center;
   gap: var(--space-xl);
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-size: clamp(0.75rem, 1.5vw, 1.5rem);
   font-style: italic;
   font-weight: 300;
   -webkit-text-fill-color: transparent;
@@ -803,6 +821,29 @@
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;
+}
+
+/* Checkbox group for multi-select services */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-body);
+  color: var(--vintage-wine);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--deep-red);
+  cursor: pointer;
 }
 
 /* Floating label variant */
