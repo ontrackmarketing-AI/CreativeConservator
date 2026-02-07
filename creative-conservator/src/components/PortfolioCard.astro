@@ -10,12 +10,17 @@ const { project } = Astro.props;
 
 <article class="portfolio-card" data-reveal="clip-up" data-category={project.category}>
   <div class="portfolio-card-image duotone">
-    <img
-      src={project.image}
-      alt={project.imageAlt}
-      loading="lazy"
-      decoding="async"
-    />
+    <picture>
+      <source srcset={project.image.replace('.jpg', '.webp')} type="image/webp" />
+      <img
+        src={project.image}
+        alt={project.imageAlt}
+        width="800"
+        height="1200"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
   </div>
   <div class="portfolio-card-info">
     <span class="tag">{project.category}</span>

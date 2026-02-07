@@ -6,6 +6,7 @@ import PageTransition from '../components/PageTransition.astro';
 import CustomCursor from '../components/CustomCursor.astro';
 import ScrollProgress from '../components/ScrollProgress.astro';
 
+import '../styles/fonts.css';
 import '../styles/global.css';
 import '../styles/animations.css';
 import '../styles/effects.css';
@@ -21,6 +22,7 @@ export interface Props {
   noindex?: boolean;
   structuredData?: object | object[];
   currentPath?: string;
+  preloadImage?: string;
 }
 
 const {
@@ -33,6 +35,7 @@ const {
   noindex,
   structuredData,
   currentPath,
+  preloadImage,
 } = Astro.props;
 ---
 
@@ -45,12 +48,14 @@ const {
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Preconnect to Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  {/* Preload LCP image for faster Largest Contentful Paint */}
+  {preloadImage && (
+    <link rel="preload" as="image" type="image/webp" href={preloadImage} fetchpriority="high" />
+  )}
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Caslon+Display&display=swap" rel="stylesheet" />
+  <!-- Font preloads — self-hosted, no external dependency -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/UcCo3FwrK3iLTcviYwYZ8UA3.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/TuGOUUFxWphYQ6YI6q9Xp61FQzxDRKmzr1lWfxlPCz4c.woff2" crossorigin />
 
   <!-- SEO Component -->
   <SEO
@@ -64,10 +69,9 @@ const {
     structuredData={structuredData}
   />
 
-  <!-- No-JS fallback: make page visible if JavaScript fails to load -->
+  <!-- No-JS fallback: ensure data-reveal elements are visible without JS -->
   <noscript>
     <style>
-      body.is-loading { opacity: 1 !important; }
       [data-reveal], [data-reveal] > * {
         opacity: 1 !important;
         transform: none !important;
@@ -76,7 +80,7 @@ const {
     </style>
   </noscript>
 </head>
-<body class="is-loading">
+<body>
   <!-- Scroll Progress Bar -->
   <ScrollProgress />
 
@@ -97,21 +101,22 @@ const {
   <!-- Footer -->
   <Footer />
 
-  <!-- Scripts -->
+  <!-- Scripts — lazy-loaded to keep the main thread free for FCP/LCP -->
   <script>
-    import { initAnimations } from '../scripts/animations';
-    import { initInteractions } from '../scripts/interactions';
-
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', () => {
+    async function boot() {
+      const [{ initAnimations }, { initInteractions }] = await Promise.all([
+        import('../scripts/animations'),
+        import('../scripts/interactions'),
+      ]);
       initAnimations();
       initInteractions();
+    }
 
-      // Remove loading class to trigger page reveal
-      requestAnimationFrame(() => {
-        document.body.classList.remove('is-loading');
-      });
-    });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
   </script>
 </body>
 </html>

@@ -108,10 +108,8 @@ body {
   overflow-x: hidden;
 }
 
-/* Body hidden until page load animation */
-body.is-loading {
-  opacity: 0;
-}
+/* Body starts visible — reveal animations are handled per-element
+   by GSAP via [data-reveal] gated behind .gsap-ready. */
 
 img,
 picture,

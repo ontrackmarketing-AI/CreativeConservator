@@ -44,7 +44,10 @@ const hasImage = variant === 'full-bleed' && image;
 ]}>
   {hasImage && (
     <div class="hero-full-bg">
-      <img src={image} alt={imageAlt} loading="eager" decoding="async" />
+      <picture>
+        <source srcset={image.replace('.jpg', '.webp')} type="image/webp" />
+        <img src={image} alt={imageAlt} width="1920" height="2880" loading="eager" decoding="async" fetchpriority="high" />
+      </picture>
     </div>
   )}
   {hasImage && <div class="hero-full-overlay gradient-dark-diagonal"></div>}

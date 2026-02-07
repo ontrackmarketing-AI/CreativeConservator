@@ -10,5 +10,5 @@ export default defineConfig({
     imageService: true,
   }),
   integrations: [sitemap()],
-  build: { inlineStylesheets: 'auto' },
+  build: { inlineStylesheets: 'always' },
 });
