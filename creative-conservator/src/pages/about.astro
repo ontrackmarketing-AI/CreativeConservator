@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import DefinitionBlock from '../components/DefinitionBlock.astro';
-import { values, purpose, mission, founderBio } from '../data/faqs';
+import { values, purpose, mission, founderBio, founderVision } from '../data/faqs';
 
 const structuredData = [
   {
@@ -61,6 +61,33 @@ const structuredData = [
 
       <!-- Decorative circle -->
       <div class="decorative-circle" style="right: -15%; top: 10%;" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Founder's Vision Board -->
+  <section class="section section-cream">
+    <div class="container">
+      <header class="section-header text-center" data-reveal="fade-up">
+        <p class="eyebrow">The Founder</p>
+        <h2>Vision Board</h2>
+        <div class="divider divider-center"></div>
+      </header>
+
+      <div class="vision-board" data-reveal="stagger-up">
+        {founderVision.map((item) => (
+          <div class="vision-card">
+            <h3>{item.title}</h3>
+            {item.body && <p>{item.body}</p>}
+            {item.beliefs && (
+              <ul class="vision-beliefs">
+                {item.beliefs.map((belief) => (
+                  <li>{belief}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -177,7 +204,65 @@ const structuredData = [
     padding-left: var(--space-xl);
   }
 
+  .vision-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .vision-card {
+    background: #fff;
+    padding: var(--space-xl);
+    border-left: 4px solid var(--green);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .vision-card h3 {
+    font-family: var(--font-heading);
+    color: var(--deep-red);
+    margin-bottom: var(--space-sm);
+  }
+
+  .vision-card p {
+    color: var(--vintage-wine);
+    font-size: var(--text-body);
+    line-height: var(--leading-relaxed);
+  }
+
+  .vision-beliefs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .vision-beliefs li {
+    position: relative;
+    padding-left: var(--space-lg);
+    font-size: var(--text-body);
+    line-height: var(--leading-relaxed);
+    color: var(--vintage-wine);
+  }
+
+  .vision-beliefs li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
   @media (max-width: 768px) {
+    .vision-board {
+      grid-template-columns: 1fr;
+    }
+
     .founder-grid {
       grid-template-columns: 1fr;
       gap: var(--space-2xl);

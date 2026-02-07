@@ -76,6 +76,46 @@ export const purpose = 'Our purpose is to preserve the essence of creative expre
 
 export const mission = 'Our mission is to help experience-driven brands preserve the integrity of their identity while evolving with intention. Through content strategy and content creation, we provide clear, disciplined, and strategically guided creative work that eliminates reactive content, protects brand coherence, and supports long-term growth through partnership, not production.';
 
+export interface VisionItem {
+  title: string;
+  body: string;
+  beliefs?: string[];
+}
+
+export const founderVision: VisionItem[] = [
+  {
+    title: 'Our Vision',
+    body: 'Creative Conservator was built on the belief that brands are not experienced for the first time during a sales call — they are experienced long before that moment. In a world saturated with ads, noise, and short-term tactics, we exist to help experiential brands slow down, build trust, and communicate value through presence rather than pressure.',
+  },
+  {
+    title: 'Why We Exist',
+    body: 'We work with brands where the value isn\'t in the product alone — it\'s how it\'s felt. Hospitality, service-driven businesses, experience-led construction, wellness, and lifestyle-forward regulated brands require more than promotion. They require intention.',
+  },
+  {
+    title: 'Our Approach',
+    body: 'We don\'t chase trends or build campaigns that disappear after a click. We design brand experiences and content systems that build emotion, clarity, and connection — so trust is established before the first interaction.',
+  },
+  {
+    title: 'Who We Partner With',
+    body: 'Creative Conservator partners with brands that care about how they show up. Brands that understand reputation is built over time, not manufactured overnight.',
+  },
+  {
+    title: 'What We Believe',
+    body: '',
+    beliefs: [
+      'Trust is built before conversion',
+      'Experience matters more than exposure',
+      'Consistency creates credibility',
+      'Presence outperforms promotion',
+      'Long-term brands are built intentionally',
+    ],
+  },
+  {
+    title: 'Our Commitment',
+    body: 'We commit to building brands that are felt, not forced — and experiences that last longer than any single campaign.',
+  },
+];
+
 export const founderBio = {
   name: 'Darya',
   bio: 'Bringing a unique blend of marketing strategy, sales experience, and global perspective shaped by modeling and extensive international travel. With a strong eye for storytelling and brand presence, she focuses on creating campaigns that go beyond promotion—turning marketing into an experience brands feel, remember, and live through. She is currently studying digital marketing to continuously refine her craft in a fast-evolving industry.',
