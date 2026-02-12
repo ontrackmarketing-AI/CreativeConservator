@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # mobile audit screenshots
 tests/screenshots/
+
+# playwright test results
+test-results/
